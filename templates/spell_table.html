@@ -2,6 +2,16 @@
 
 {% block content %} 
   <table id="data" class="table">
+    <!-- fix column widths -->
+    <colgroup>
+      <col style="width: 5%" span="1">
+      <col style="width: 20%" span="1">
+      <col style="width: 15%" span="1">
+      <col style="width: 15%" span="1">
+      <col style="width: 10%" span="1">
+      <col style="width: 25%" span="1">
+      <col style="width: 10%" span="1">
+    </colgroup>
     <thead>
       <tr>
         <th>Level</th>
@@ -23,11 +33,22 @@
           <td>{{ spell.range }}</td>
           <td>{{ spell.duration }}</td>
           <td>{{ spell.components }}</td>
-        </tr>
       {% endfor %}
     </tbody>
   </table>
+
   <script src="{{ url_for('static', filename='color.js') }}"></script>
+
+  <!-- upon clicking a table row print the spell name to the console -->
+  <script>
+    $(document).ready(function() {
+      $("#data tbody tr").click(function() {
+        var spell = $(this).find("td:nth-child(2)").html();
+        console.log(spell);
+      });
+    });
+  </script>
+  
 {% endblock %}
 
 {% block scripts %}
