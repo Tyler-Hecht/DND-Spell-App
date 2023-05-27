@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <style>
+      .br {
+          display: block;
+          margin-bottom: var(--h);
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-YcajPjqsmm2c9zQQL/J9ye4cR+nrFJh56h6GJQ1m8FexYH5B/14JgjtgsVg3ViqX" crossorigin="anonymous"></script>
+  </head>
+  <script src="{{ url_for('static', filename='search.js') }}"></script>
+  <body>
+    <div class="container">
+      <span class="br" style="--h: 0.8em;"></span>
+      <h1>{{ title }}</h1>
+      <span class="br" style="--h: 1em;"></span>
+      <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus">
+      <span class="br" style="--h: 0.3em;"></span>
+      {% block content %}{% endblock %}
+    </div>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

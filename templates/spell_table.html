@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block content %} 
+  <table id="data" class="table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Name</th>
+        <th>School</th>
+        <th>Casting Time</th>
+        <th>Range</th>
+        <th>Duration</th>
+        <th>Components</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for spell in spells %}
+        <tr>
+          <td>{{ spell.level }}</td>
+          <td>{{ spell.name }}</td>
+          <td>{{ spell.school }}</td>
+          <td>{{ spell.casting_time }}</td>
+          <td>{{ spell.range }}</td>
+          <td>{{ spell.duration }}</td>
+          <td>{{ spell.components }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <script src="{{ url_for('static', filename='color.js') }}"></script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='sorting.js') }}"></script>
+{% endblock %}

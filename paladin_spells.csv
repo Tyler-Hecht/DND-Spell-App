@@ -1,0 +1,55 @@
+Level,Spell Name,School,Casting Time,Range,Duration,Components
+1,Bless,Enchantment,1 Action,30 feet,"Concentration, up to 1 minute","V, S, M"
+1,Ceremony,Evocation,1 Action,Touch,Instantaneous,"V, S, M"
+1,Command,Enchantment,1 Action,60 feet,1 round,V
+1,Compelled Duel,Enchantment,1 Bonus Action,30 feet,"Concentration, up to 1 minute",V
+1,Cure Wounds,Evocation,1 Action,Touch,Instantaneous,"V, S"
+1,Detect Evil and Good,Divination,1 Action,Self,"Concentration, up to 10 minutes","V, S"
+1,Detect Magic,Divination,1 Action,Self,"Concentration, up to 10 minutes","V, S"
+1,Detect Poison and Disease,Divination,1 Action,Self,"Concentration, up to 10 minutes","V, S, M"
+1,Divine Favor,Evocation,1 Bonus Action,Self,"Concentration, up to 1 minute","V, S"
+1,Heroism,Enchantment,1 Action,Touch,"Concentration, up to 1 minute","V, S"
+1,Protection from Evil and Good,Abjuration,1 Action,Touch,"Concentration, up to 10 minutes","V, S, M"
+1,Purify Food and Drink,Transmutation,1 Action,10 feet,Instantaneous,"V, S"
+1,Searing Smite,Evocation,1 Bonus Action,Self,"Concentration, up to 1 minute",V
+1,Shield of Faith,Abjuration,1 Bonus Action,60 feet,"Concentration, up to 1 minute","V, S, M"
+1,Thunderous Smite,Evocation,1 Bonus Action,Self,"Concentration, up to 1 minute",V
+1,Wrathful Smite,Evocation,1 Bonus Action,Self,"Concentration, up to 1 minute",V
+2,Aid,Abjuration,1 Action,30 Feet,8 hours,"V, S, M"
+2,Branding Smite,Evocation,1 Bonus Action,Self,"Concentration, up to 1 minute",V
+2,Find Steed,Conjuration,10 Minutes,30 feet,Instantaneous,"V, S"
+2,Find Vehicle (UA),Conjuration T,10 Minutes,30 feet,8 hours,"V, S"
+2,Gentle Repose,Necromancy,1 Action,Touch,10 days,"V, S, M"
+2,Lesser Restoration,Abjuration,1 Action,Touch,Instantaneous,"V, S"
+2,Locate Object,Divination,1 Action,Self,"Concentration, up to 10 minutes","V, S, M"
+2,Magic Weapon,Transmutation,1 Bonus Action,Touch,"Concentration, up to 1 hour","V, S"
+2,Prayer of Healing,Evocation,10 Minutes,30 feet,Instantaneous,V
+2,Protection from Poison,Abjuration,1 Action,Touch,1 hour,"V, S"
+2,Warding Bond,Abjuration,1 Action,Touch,1 hour,"V, S, M"
+2,Zone of Truth,Enchantment,1 Action,60 feet,10 minutes,"V, S"
+3,Aura of Vitality,Evocation,1 Action,Self (30-foot radius),"Concentration, up to 1 minute",V
+3,Blinding Smite,Evocation,1 Bonus Action,Self,"Concentration, up to 1 minute",V
+3,Create Food and Water,Conjuration,1 Action,30 feet,Instantaneous,"V, S"
+3,Crusader's Mantle,Evocation,1 Action,Self,"Concentration, up to 1 minute",V
+3,Daylight,Evocation,1 Action,60 feet,1 hour,"V, S"
+3,Dispel Magic,Abjuration,1 Action,120 feet,Instantaneous,"V, S"
+3,Elemental Weapon,Transmutation,1 Action,Touch,"Concentration, up to 1 hour","V, S"
+3,Magic Circle,Abjuration,1 Minute,10 feet,1 hour,"V, S, M"
+3,Remove Curse,Abjuration,1 Action,Touch,Instantaneous,"V, S"
+3,Revivify,Necromancy,1 Action,Touch,Instantaneous,"V, S, M"
+3,Spirit Shroud,Necromancy,1 Bonus Action,Self,"Concentration, up to 1 minute","V, S"
+4,Aura of Life,Abjuration,1 Action,Self (30-foot radius),"Concentration, up to 10 minutes",V
+4,Aura of Purity,Abjuration,1 Action,Self (30-foot radius),"Concentration, up to 10 minutes",V
+4,Banishment,Abjuration,1 Action,60 feet,"Concentration, up to 1 minutes","V, S, M"
+4,Death Ward,Abjuration,1 Action,Touch,8 hours,"V, S"
+4,Find Greater Steed,Conjuration,10 Minutes,30 feet,Instantaneous,"V, S"
+4,Locate Creature,Divination,1 Action,Self,"Concentration, up to 1 hour","V, S, M"
+4,Staggering Smite,Evocation,1 Bonus Action,Self,"Concentration, up to 1 minute",V
+5,Banishing Smite,Abjuration,1 Bonus Action,Self,"Concentration, up to 1 minute",V
+5,Circle of Power,Abjuration,1 Action,Self (30-foot radius),"Concentration, up to 10 minutes",V
+5,Destructive Wave,Evocation,1 Action,Self (30-foot radius),Instantaneous,V
+5,Dispel Evil and Good,Abjuration,1 Action,Self,"Concentration, up to 1 minute","V, S, M"
+5,Geas,Enchantment,1 Minute,60 feet,30 days,V
+5,Holy Weapon,Evocation,1 Bonus Action,Touch,"Concentration, up to 1 hour","V, S"
+5,Raise Dead,Necromancy,1 Action,Touch,Instantaneous,"V, S, M"
+5,Summon Celestial,Conjuration,1 Action,90 feet,"Concentration, up to 1 hour","V, S, M"
