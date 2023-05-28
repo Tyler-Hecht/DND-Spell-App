@@ -18,10 +18,6 @@
         max-width: 1250px;
       }
 
-      body {
-        background-image: url("{{ url_for('static', filename='dnd.jpg') }}");
-      }
-
       /* add padding to sidebar-text */
       #sidebar-text {
         padding-left: 50px;
@@ -42,7 +38,6 @@
         <div class="col-md-10">
           <h3>{{ title }}</h3>
         </div>
-        <!-- align everything to the right -->
         <div class="col-md-2">
           <select class="form-select" aria-label="Default select example" onchange="classChange(this)" style="float: right;">
             <option selected>Select Class</option>
@@ -51,16 +46,24 @@
             <option value="Bard">Bard</option>
           </select>
         </div>
+      </div>
       <span class="br" style="--h: 1em;"></span>
 
       <!-- search bar -->
-      <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus">
+      <div class="row">
+        <div class="col-md-7">
+          <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus">
+        </div>
+        <div class="col-md-5">
+          {% block levels %}{% endblock %}
+        </div>
+      </div>
       <span class="br" style="--h: 0.5em;"></span>
 
       <!-- split page in two columns -->
       <div class="row">
         <div class="col-md-7">
-          {% block content %}{% endblock %}
+          {% block table %}{% endblock %}
         </div>
         <div class="col-md-5">
           <p id="sidebar-text" style="background-color: white;">
@@ -77,7 +80,6 @@
       function classChange(select) {
         var selected = select.options[select.selectedIndex].value;
         $.get("/class/" + selected, function(data, status) {
-          // make entire page reload
           window.location.href = "/class/" + selected;
         });
       }

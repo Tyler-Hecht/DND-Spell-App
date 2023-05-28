@@ -14,12 +14,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def index(class_name = "DND"):
-	return render_template("spell_table.html", title=f'{class_name} Spells', spells = [])
+	return render_template("spell_table.html", title=f'{class_name} Spells', spells = [], show = 0)
 
 @app.route('/class/<class_name>', methods=['GET'])
 def class_spells(class_name):
 	spells = spellize(scrape_class(class_name.lower()))
-	return render_template("spell_table.html", title=f'{class_name} Spells', spells = spells)
+	if class_name in ["Paladin", "Ranger"]:
+		show = 1
+	else:
+		show = 2
+	return render_template("spell_table.html", title=f'{class_name} Spells', spells = spells, show = show)
 
 @app.route('/spell/<spell_name>', methods=['GET'])
 def spell(spell_name):
@@ -29,4 +33,3 @@ def spell(spell_name):
 		content = scrape_spell(spell_name)
 		spell_cache[spell_name] = content
 	return content
-

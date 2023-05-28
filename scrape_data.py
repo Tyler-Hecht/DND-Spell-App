@@ -31,6 +31,8 @@ def scrape_class(class_name):
             for property, data in zip(properties, spell.find_all("td")):
                 if "Feet" in data.text:
                     info[property] = data.text.lower()
+                elif "Days" in data.text:
+                    info[property] = data.text.replace("Days", "days")
                 else:
                     info[property] = data.text
             

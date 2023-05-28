@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 
-{% block content %} 
+{% block table %} 
 <div class="scrollit">
   <style>
     .table {
@@ -60,4 +60,59 @@
   });
 </script>
   
+{% endblock %}
+
+{% block levels %}
+{% if show >= 1 %}
+<div id="checkboxes">
+  <input type="checkbox" id="level1" name="level1" value="1" onclick="levelSearch()" {% if level1 %}checked{% endif %}>
+  <label for="level1">1st</label>
+  <input type="checkbox" id="level2" name="level2" value="2" onclick="levelSearch()" {% if level2 %}checked{% endif %}>
+  <label for="level2">2nd</label>
+  <input type="checkbox" id="level3" name="level3" value="3" onclick="levelSearch()" {% if level3 %}checked{% endif %}>
+  <label for="level3">3rd</label>
+  <input type="checkbox" id="level4" name="level4" value="4" onclick="levelSearch()" {% if level4 %}checked{% endif %}>
+  <label for="level4">4th</label>
+  <input type="checkbox" id="level5" name="level5" value="5" onclick="levelSearch()" {% if level5 %}checked{% endif %}>
+  <label for="level5">5th</label>
+  {% if show == 2 %}
+  <div id = "fullCaster">
+    <input type="checkbox" id="level6" name="level6" value="6" onclick="levelSearch()" {% if level6 %}checked{% endif %}>
+    <label for="level6">6th</label>
+    <input type="checkbox" id="level7" name="level7" value="7" onclick="levelSearch()" {% if level7 %}checked{% endif %}>
+    <label for="level7">7th</label>
+    <input type="checkbox" id="level8" name="level8" value="8" onclick="levelSearch()" {% if level8 %}checked{% endif %}>
+    <label for="level8">8th</label>
+    <input type="checkbox" id="level9" name="level9" value="9" onclick="levelSearch()" {% if level9 %}checked{% endif %}>
+    <label for="level9">9th</label>
+    <input type="checkbox" id="level0" name="level0" value="0" onclick="levelSearch()" {% if level0 %}checked{% endif %}>
+    <label for="level0">Cantrip</label>
+  </div>
+  {% endif %}
+  </div>
+{% endif %}
+</div>
+
+<script>
+  // functionality for checkboxes
+  function levelSearch() {
+    // get all checked boxes
+    var checked = [];
+    $('input[type=checkbox]').each(function () {
+      if (this.checked) {
+        checked.push(this.value);
+      }
+    });
+    // only show rows with matching level
+    $("#data tbody tr").each(function () {
+      var level = $(this).find("td:nth-child(1)").html();
+      if (checked.includes(level)) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  }
+</script>
+
 {% endblock %}
