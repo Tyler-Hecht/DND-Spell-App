@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import pandas as pd
 
-def scrape_data(class_name):
+def scrape_class(class_name):
     url = f"http://dnd5e.wikidot.com/spells:{class_name}"
     properties = ["Spell Name", "School", "Casting Time", "Range", "Duration", "Components"]
 
@@ -43,3 +43,15 @@ def scrape_data(class_name):
     cols = cols[-1:] + cols[:-1]
     df = df[cols]
     return df
+
+def scrape_spell(spell_name):
+    # make sure spell name is lowercase and has no spaces
+    spell_name = spell_name.lower().replace(" ", "-")
+    url = f"http://dnd5e.wikidot.com/spell:{spell_name}"
+    
+    page = urlopen(url)
+    html = page.read().decode("utf-8")
+    soup = BeautifulSoup(html, "html.parser")
+
+    # get div with id "page-content"
+    return soup.find("div", {"id": "page-content"})

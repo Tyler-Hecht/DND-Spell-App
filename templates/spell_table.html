@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 
 {% block content %} 
+<div class="scrollit">
   <table id="data" class="table">
     <!-- fix column widths -->
     <colgroup>
@@ -13,7 +14,6 @@
       <col style="width: 10%" span="1">
     </colgroup>
     <thead>
-      <tr>
         <th>Level</th>
         <th>Name</th>
         <th>School</th>
@@ -36,15 +36,19 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
 
   <script src="{{ url_for('static', filename='color.js') }}"></script>
 
-  <!-- upon clicking a table row print the spell name to the console -->
+
   <script>
     $(document).ready(function() {
       $("#data tbody tr").click(function() {
         var spell = $(this).find("td:nth-child(2)").html();
-        console.log(spell);
+        // send get request and change sidebar text to response
+        $.get("/spell/" + spell, function(data, status) {
+          $("#sidebar-text").html(data);
+        });
       });
     });
   </script>
