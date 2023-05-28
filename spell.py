@@ -1,5 +1,3 @@
-import json
-
 class Spell:
     def __init__(self, level, name, school, casting_time, range, duration, components):
         self.level = level
@@ -10,13 +8,32 @@ class Spell:
         self.duration = duration
         self.components = components
 
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, 
-            sort_keys=True, indent=4)
-
 def spellize(df):
     spells = []
     for row in df.itertuples():
         spell = Spell(row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+        spells.append(spell)
+    return spells
+
+def spell_to_dict(spell):
+    return {
+        "level": spell.level,
+        "name": spell.name,
+        "school": spell.school,
+        "casting_time": spell.casting_time,
+        "range": spell.range,
+        "duration": spell.duration,
+        "components": spell.components
+    }
+
+def filter_spells(config, spell_list):
+    spells = []
+    for spell in spell_list:
+        if config["query"] is not None and config["query"] != "":
+            if config["query"].lower() not in spell.name.lower():
+                continue
+        if config["levels"] != []:
+            if int(spell.level) not in config["levels"]:
+                continue
         spells.append(spell)
     return spells

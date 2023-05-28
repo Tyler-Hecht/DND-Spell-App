@@ -1,22 +1,11 @@
 function search() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementsByName("query")[0];
-    filter = input.value.toUpperCase();
-    table = document.getElementById("data");
-    tr = table.getElementsByTagName("tr");
-    // only search the visible rows
-    for (i = 0; i < tr.length; i++) {
-        if (tr[i].style.display == "none") {
-            continue;
-        }
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
+    formData = {
+        "query": $("#search").val()
     }
+    // send post request to server with search text
+    $.post("/search", formData)
+    .done(function(data) {
+        // update table
+        $("#table-content").html(data);
+    });
   }

@@ -1,99 +1,63 @@
-{% extends "index.html" %}
-
-{% block table %} 
 <div class="scrollit">
-  <style>
-    .table {
-      font-size: 0.9em;
-    }
-  </style>
-  <table id="data" class="table">
-    <!-- fix column widths -->
-    <colgroup>
-      <col style="width: 5%">
-      <col style="width: 20%">
-      <col style="width: 10%">
-      <col style="width: 25%">
-      <col style="width: 10%">
-      <col style="width: 22.5%">
-      <col style="width: 7.5%">
-    </colgroup>
-    <thead style="background-color: white;">
-        <th>Level</th>
-        <th>Name</th>
-        <th>School</th>
-        <th>Casting Time</th>
-        <th>Range</th>
-        <th>Duration</th>
-        <th>Components</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for spell in spells %}
-        <tr>
-          <td>{{ spell.level }}</td>
-          <td>{{ spell.name }}</td>
-          <td>{{ spell.school }}</td>
-          <td>{{ spell.casting_time }}</td>
-          <td>{{ spell.range }}</td>
-          <td>{{ spell.duration }}</td>
-          <td>{{ spell.components }}</td>
-      {% endfor %}
-    </tbody>
-  </table>
+    <style>
+      .table {
+        font-size: 0.9em;
+      }
+    </style>
+    <!-- Add an ID to the table content -->
+    <div id="table-content">
+      <table id="data" class="table">
+        <!-- fix column widths -->
+        <colgroup>
+            <col style="width: 5%">
+            <col style="width: 20%">
+            <col style="width: 10%">
+            <col style="width: 25%">
+            <col style="width: 10%">
+            <col style="width: 22.5%">
+            <col style="width: 7.5%">
+        </colgroup>
+        <thead style="background-color: white;">
+            <th>Level</th>
+            <th>Name</th>
+            <th>School</th>
+            <th>Casting Time</th>
+            <th>Range</th>
+            <th>Duration</th>
+            <th>Components</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for spell in spells %}
+            <tr>
+                <td>{{ spell.level }}</td>
+                <td>{{ spell.name }}</td>
+                <td>{{ spell.school }}</td>
+                <td>{{ spell.casting_time }}</td>
+                <td>{{ spell.range }}</td>
+                <td>{{ spell.duration }}</td>
+                <td>{{ spell.components }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
 </div>
-
+  
 <script src="{{ url_for('static', filename='color.js') }}"></script>
 
 <script>
+  // when a row is clicked, show the spell details in the sidebar
   $(document).ready(function() {
-    $("#data tbody tr").click(function() {
-      var spell = $(this).find("td:nth-child(2)").html();
-      spell = spell.replace("/", " ");
-      // send get request and change sidebar text to response
-      // also make sidebar background color white
-      $.get("/spell/" + spell, function(data, status) {
+    $("#data tr").click(function() {
+      // get the spell name
+      var name = $(this).find("td").eq(1).html();
+      // get the spell details
+      $.get("/spell/" + name, function(data) {
+        // Update the sidebar without changing the URL
         $("#sidebar-text").html(data);
-        $("#sidebar-text").css("background-color", "white");
       });
     });
   });
 </script>
-  
-{% endblock %}
 
-{% block levels %}
-{% if show >= 1 %}
-<div id="checkboxes">
-  <input type="checkbox" id="level1" name="level1" value="1" onclick="levelSearch()" {% if level1 %}checked{% endif %}>
-  <label for="level1">1st</label>
-  <input type="checkbox" id="level2" name="level2" value="2" onclick="levelSearch()" {% if level2 %}checked{% endif %}>
-  <label for="level2">2nd</label>
-  <input type="checkbox" id="level3" name="level3" value="3" onclick="levelSearch()" {% if level3 %}checked{% endif %}>
-  <label for="level3">3rd</label>
-  <input type="checkbox" id="level4" name="level4" value="4" onclick="levelSearch()" {% if level4 %}checked{% endif %}>
-  <label for="level4">4th</label>
-  <input type="checkbox" id="level5" name="level5" value="5" onclick="levelSearch()" {% if level5 %}checked{% endif %}>
-  <label for="level5">5th</label>
-  {% if show == 2 %}
-  <div id = "fullCaster">
-    <input type="checkbox" id="level6" name="level6" value="6" onclick="levelSearch()" {% if level6 %}checked{% endif %}>
-    <label for="level6">6th</label>
-    <input type="checkbox" id="level7" name="level7" value="7" onclick="levelSearch()" {% if level7 %}checked{% endif %}>
-    <label for="level7">7th</label>
-    <input type="checkbox" id="level8" name="level8" value="8" onclick="levelSearch()" {% if level8 %}checked{% endif %}>
-    <label for="level8">8th</label>
-    <input type="checkbox" id="level9" name="level9" value="9" onclick="levelSearch()" {% if level9 %}checked{% endif %}>
-    <label for="level9">9th</label>
-    <input type="checkbox" id="level0" name="level0" value="0" onclick="levelSearch()" {% if level0 %}checked{% endif %}>
-    <label for="level0">Cantrip</label>
-  </div>
-  {% endif %}
-</div>
-{% endif %}
-
-{% endblock %}
-
-{% block casting_time %}
-
-{% endblock %}

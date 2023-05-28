@@ -35,8 +35,8 @@
       <!-- title -->
       <span class="br" style="--h: 0.8em;"></span>
       <div class="row">
-        <div class="col-md-10">
-          <h3>{{ title }}</h3>
+        <div class="col-md-10" id="title">
+          <h3>DND Spells</h3>
         </div>
         <div class="col-md-2">
           <select class="form-select" aria-label="Default select example" onchange="classChange(this)" style="float: right;">
@@ -53,21 +53,20 @@
       <div class="row">
         <div class="col-md-3" style="width: 35%">
           <span class="br" style="--h: 0.25em;"></span>
-          <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus">
+          <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus" id="search">
         </div>
         <div class="col-md-3" style="width: 22.5%">
           {% block levels %}{% endblock %}
         </div>
-        <div class="col-md-3" style="width: 42.5%">
-          {% block casting_time %}{% endblock %}
+        <div class="col-md-6" style="width: 42.5%">
         </div>
       </div>
       <span class="br" style="--h: 0.5em;"></span>
 
       <!-- split page in two columns -->
       <div class="row">
-        <div class="col-md-7">
-          {% block table %}{% endblock %}
+        <div class="col-md-7" id="table-content">
+          <!-- table -->
         </div>
         <div class="col-md-5">
           <p id="sidebar-text" style="background-color: white;">
@@ -80,12 +79,14 @@
     <script src="{{ url_for('static', filename='sorting.js') }}"></script>
     <script src="{{ url_for('static', filename='search.js') }}"></script>
     <script>
-      // change class and send get request
       function classChange(select) {
         var selected = select.options[select.selectedIndex].value;
-        $.get("/class/" + selected, function(data, status) {
-          window.location.href = "/class/" + selected;
+        $.get("/class/" + selected, function(data) {
+          // Update the table content without changing the URL
+          $("#table-content").html(data);
         });
+        // change title
+        $("#title").html("<h3>" + selected + " Spells</h3>");
       }
     </script>
   </body>
