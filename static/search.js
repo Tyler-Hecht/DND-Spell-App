@@ -4,7 +4,11 @@ function search() {
     filter = input.value.toUpperCase();
     table = document.getElementById("data");
     tr = table.getElementsByTagName("tr");
+    // only search the visible rows
     for (i = 0; i < tr.length; i++) {
+        if (tr[i].style.display == "none") {
+            continue;
+        }
         td = tr[i].getElementsByTagName("td")[1];
         if (td) {
             txtValue = td.textContent || td.innerText;

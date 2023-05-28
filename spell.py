@@ -1,3 +1,5 @@
+import json
+
 class Spell:
     def __init__(self, level, name, school, casting_time, range, duration, components):
         self.level = level
@@ -7,6 +9,10 @@ class Spell:
         self.range = range
         self.duration = duration
         self.components = components
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)
 
 def spellize(df):
     spells = []

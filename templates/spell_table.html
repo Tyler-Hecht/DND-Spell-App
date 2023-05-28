@@ -89,30 +89,11 @@
     <label for="level0">Cantrip</label>
   </div>
   {% endif %}
-  </div>
-{% endif %}
 </div>
+{% endif %}
 
-<script>
-  // functionality for checkboxes
-  function levelSearch() {
-    // get all checked boxes
-    var checked = [];
-    $('input[type=checkbox]').each(function () {
-      if (this.checked) {
-        checked.push(this.value);
-      }
-    });
-    // only show rows with matching level
-    $("#data tbody tr").each(function () {
-      var level = $(this).find("td:nth-child(1)").html();
-      if (checked.includes(level)) {
-        $(this).show();
-      } else {
-        $(this).hide();
-      }
-    });
-  }
-</script>
+{% endblock %}
+
+{% block casting_time %}
 
 {% endblock %}

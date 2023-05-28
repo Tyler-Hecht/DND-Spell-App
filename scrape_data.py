@@ -28,13 +28,21 @@ def scrape_class(class_name):
                 continue
             name = name.text
             info = {}
+
             for property, data in zip(properties, spell.find_all("td")):
                 if "Feet" in data.text:
                     info[property] = data.text.lower()
                 elif "Days" in data.text:
                     info[property] = data.text.replace("Days", "days")
+                elif "action" in data.text:
+                    info[property] = data.text.replace("action", "Action")
                 else:
                     info[property] = data.text
+
+            # if name is Melf's Minute Meteors, casting time is 1 Action and range is Self
+            if name == "Melf's Minute Meteors":
+                info["Casting Time"] = "1 Action"
+                info["Range"] = "Self"
             
             level = spell_levels[tab]
             if level != "Cantrip":
@@ -59,7 +67,7 @@ def scrape_class(class_name):
 
 def scrape_spell(spell_name):
     # make sure spell name is lowercase and has no spaces
-    spell_name2 = spell_name.lower().replace(" ", "-").replace("-(ua)", "").replace("'", "").replace(":", "")
+    spell_name2 = spell_name.lower().replace(" ", "-").replace("'", "").replace(":", "").replace("-(ua)", "").replace("-(hb)", "")
     url = f"http://dnd5e.wikidot.com/spell:{spell_name2}"
     
     page = urlopen(url)
