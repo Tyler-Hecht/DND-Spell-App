@@ -42,16 +42,40 @@ class CastingTime {
   }
 }
 
+function extractFeet(range) {
+  if (range.includes("feet")) {
+    return parseInt(range.split(" ")[0]);
+  }
+  if (range.includes("foot")) {
+    return parseInt(range.split("-")[0]);
+  }
+  if (range.includes("ft")) {
+    return parseInt(range.split("ft")[0]);
+  }
+}
+
 // Range class
 class Range {
   constructor(range) {
     this.range = range;
+    if (range == "Sight") {
+      this.range = "2 miles";
+    }
   }
   // less than operator
   lt(other) {
     // self is always less than anything else
     if (this.range.includes("Self")) {
       if (other.range.includes("Self")) {
+        if (this.range.includes("foot") && other.range.includes("foot")) {
+          // if of form x ft., extract x and compare
+          var foot_index_self = this.range.indexOf("-foot");
+          // get number after ( but before "-foot"
+          var self = parseInt(this.range.substring(0, foot_index_self).split("(")[1]);
+          var foot_index_other = other.range.indexOf("-foot");
+          var o = parseInt(other.range.substring(0, foot_index_other).split("(")[1]);
+          return self < o;
+        }
         return !this.range.includes("foot") && other.range.includes("foot");
       }
       return true;
@@ -68,9 +92,31 @@ class Range {
       return false;
     }
     // if of form x ft., extract x and compare
-    var self = parseInt(this.range.split(" ")[0]);
-    var o = parseInt(other.range.split(" ")[0]);
-    return self < o;
+    if (this.range.includes("feet") || this.range.includes("foot") || this.range.includes("ft")) {
+      if (other.range.includes("feet") || other.range.includes("foot") || other.range.includes("ft")) {
+        var self = extractFeet(this.range);
+        var o = extractFeet(other.range);
+        return self < o;
+      }
+      return true;
+    }
+    if (other.range.includes("feet") || other.range.includes("foot") || other.range.includes("ft")) {
+      return false;
+    }
+    // if other is of form x miles, extract x and compare
+    if (this.range.includes("mile")) {
+      if (other.range.includes("mile")) {
+        var self = parseInt(this.range.split(" ")[0]);
+        var o = parseInt(other.range.split(" ")[0]);
+        return self < o;
+      }
+      return true;
+    }
+    if (other.range.includes("mile")) {
+      return false;
+    }
+    return this.range < other.range;
+
   }
 }
 
@@ -188,8 +234,6 @@ class Duration {
   }
 }
 
-
-
 // compares two rows, first by the primary sort column, then by the level column
 function compare(a_primary, b_primary, a_level, b_level, headerName) {
     if (headerName == "Range") {
@@ -219,58 +263,58 @@ function compare(a_primary, b_primary, a_level, b_level, headerName) {
     return 0;
   }
 
-  // sorts the table by the given column
-  // uses level as a secondary sort column
-  function sort(column, direction) {
-    var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("data");
-    switching = true;
-    while (switching) {
-      switching = false;
-      rows = table.getElementsByTagName("tr");
-      for (i = 1; i < (rows.length - 1); i++) {
-        shouldSwitch = false;
-        x = rows[i].getElementsByTagName("td")[column];
-        y = rows[i + 1].getElementsByTagName("td")[column];
-        if (direction == "asc") {
-          var headerName = rows[0].getElementsByTagName("th")[column].innerHTML;
-          if (compare(x.innerHTML, y.innerHTML, rows[i].getElementsByTagName("td")[0].innerHTML, rows[i + 1].getElementsByTagName("td")[0].innerHTML, headerName) == 1) {
-            shouldSwitch = true;
-            break;
-          }
-        } else if (direction == "desc") {
-          var headerName = rows[0].getElementsByTagName("th")[column].innerHTML;
-          if (compare(x.innerHTML, y.innerHTML, rows[i].getElementsByTagName("td")[0].innerHTML, rows[i + 1].getElementsByTagName("td")[0].innerHTML, headerName) == -1) {
-            shouldSwitch = true;
-            break;
-          }
+// sorts the table by the given column
+// uses level as a secondary sort column
+function sort(column, direction) {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("data");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.getElementsByTagName("tr");
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("td")[column];
+      y = rows[i + 1].getElementsByTagName("td")[column];
+      if (direction == "asc") {
+        var headerName = rows[0].getElementsByTagName("th")[column].innerHTML;
+        if (compare(x.innerHTML, y.innerHTML, rows[i].getElementsByTagName("td")[0].innerHTML, rows[i + 1].getElementsByTagName("td")[0].innerHTML, headerName) == 1) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (direction == "desc") {
+        var headerName = rows[0].getElementsByTagName("th")[column].innerHTML;
+        if (compare(x.innerHTML, y.innerHTML, rows[i].getElementsByTagName("td")[0].innerHTML, rows[i + 1].getElementsByTagName("td")[0].innerHTML, headerName) == -1) {
+          shouldSwitch = true;
+          break;
         }
       }
-      if (shouldSwitch) {
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
     }
   }
+}
 
-  // when a column header is clicked, sort the table by that column
-  // if the column is already sorted, reverse the sort
-  // if the column is not sorted, sort ascending
-  var table = document.getElementById("data");
-  var headers = table.getElementsByTagName("th");
-  for (i = 0; i < headers.length; i++) {
-    headers[i].addEventListener("click", function() {
-      var column = this.cellIndex;
-      var direction = this.getAttribute("data-direction");
-      if (direction == "asc") {
-        this.setAttribute("data-direction", "desc");
-        sort(column, "desc");
-      } else if (direction == "desc") {
-        this.setAttribute("data-direction", "asc");
-        sort(column, "asc");
-      } else {
-        this.setAttribute("data-direction", "asc");
-        sort(column, "asc");
-      }
-    });
-  }
+// when a column header is clicked, sort the table by that column
+// if the column is already sorted, reverse the sort
+// if the column is not sorted, sort ascending
+var table = document.getElementById("data");
+var headers = table.getElementsByTagName("th");
+for (i = 0; i < headers.length; i++) {
+  headers[i].addEventListener("click", function() {
+    var column = this.cellIndex;
+    var direction = this.getAttribute("data-direction");
+    if (direction == "asc") {
+      this.setAttribute("data-direction", "desc");
+      sort(column, "desc");
+    } else if (direction == "desc") {
+      this.setAttribute("data-direction", "asc");
+      sort(column, "asc");
+    } else {
+      this.setAttribute("data-direction", "asc");
+      sort(column, "asc");
+    }
+  });
+}

@@ -12,6 +12,11 @@ def scrape_class(class_name):
     soup = BeautifulSoup(html, "html.parser")
     spells = []
 
+    # get list of li tags in ul tag with class "yui-nav"
+    spell_levels = soup.find("ul", {"class": "yui-nav"}).find_all("li")
+    # get list of spell names
+    spell_levels = [spell_level.text for spell_level in spell_levels]
+
     for tab in range(len(soup.find_all("div", {"id": lambda x: x and "wiki-tab-0-" in x}))):
         spell_list = soup.find_all("div", {"id": f"wiki-tab-0-{tab}"})
         spell_names = spell_list[0].find_all("a")
@@ -28,11 +33,17 @@ def scrape_class(class_name):
                     info[property] = data.text.lower()
                 else:
                     info[property] = data.text
-            info["Level"] = tab + 1
+            
+            level = spell_levels[tab]
+            if level != "Cantrip":
+                level = level[0]
+            else:
+                level = 0
+            info["Level"] = level
 
-            if info["Casting Time"] == "1 Action R":
-                info["Casting Time"] = "1 Action"
-            if " T" in info["School"]:
+            if info["Casting Time"][-2:] == " R":
+                info["Casting Time"] = info["Casting Time"][:-2]
+            if info["School"][-2:] == " R":
                 info["School"] = info["School"][:-2]
 
             spells.append(info)
@@ -46,7 +57,7 @@ def scrape_class(class_name):
 
 def scrape_spell(spell_name):
     # make sure spell name is lowercase and has no spaces
-    spell_name2 = spell_name.lower().replace(" ", "-")
+    spell_name2 = spell_name.lower().replace(" ", "-").replace("-(ua)", "").replace("'", "").replace(":", "")
     url = f"http://dnd5e.wikidot.com/spell:{spell_name2}"
     
     page = urlopen(url)
