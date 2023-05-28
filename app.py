@@ -13,7 +13,7 @@ spell_cache = {}
 app = Flask(__name__)
 
 @app.route('/')
-def index(class_name = CLASS):
+def index(class_name = "DND"):
 	return render_template("spell_table.html", title=f'{class_name} Spells', spells = [])
 
 @app.route('/class/<class_name>', methods=['GET'])

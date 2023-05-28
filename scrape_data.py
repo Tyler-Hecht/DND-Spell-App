@@ -46,8 +46,8 @@ def scrape_class(class_name):
 
 def scrape_spell(spell_name):
     # make sure spell name is lowercase and has no spaces
-    spell_name = spell_name.lower().replace(" ", "-")
-    url = f"http://dnd5e.wikidot.com/spell:{spell_name}"
+    spell_name2 = spell_name.lower().replace(" ", "-")
+    url = f"http://dnd5e.wikidot.com/spell:{spell_name2}"
     
     page = urlopen(url)
     html = page.read().decode("utf-8")
@@ -57,5 +57,13 @@ def scrape_spell(spell_name):
     content = soup.find("div", {"id": "page-content"})
     # remove the last <p> tag
     content.find_all("p")[-1].decompose()
+
+    # add spell name to the top of the page
+    content.insert(0, soup.new_tag("h3"))
+    content.h3.string = spell_name
+
+    # make all hyperlinks into normal text (no longer clickable)
+    for link in content.find_all("a"):
+        link.replaceWithChildren()
 
     return str(content)
