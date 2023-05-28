@@ -38,23 +38,18 @@
   </table>
 </div>
 
-  <script src="{{ url_for('static', filename='color.js') }}"></script>
+<script src="{{ url_for('static', filename='color.js') }}"></script>
 
-
-  <script>
-    $(document).ready(function() {
-      $("#data tbody tr").click(function() {
-        var spell = $(this).find("td:nth-child(2)").html();
-        // send get request and change sidebar text to response
-        $.get("/spell/" + spell, function(data, status) {
-          $("#sidebar-text").html(data);
-        });
+<script>
+  $(document).ready(function() {
+    $("#data tbody tr").click(function() {
+      var spell = $(this).find("td:nth-child(2)").html();
+      // send get request and change sidebar text to response
+      $.get("/spell/" + spell, function(data, status) {
+        $("#sidebar-text").html(data);
       });
     });
-  </script>
+  });
+</script>
   
-{% endblock %}
-
-{% block scripts %}
-<script src="{{ url_for('static', filename='sorting.js') }}"></script>
 {% endblock %}

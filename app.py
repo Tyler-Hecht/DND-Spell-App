@@ -7,22 +7,26 @@ import pandas as pd
 from spell import Spell, spellize
 from scrape_data import scrape_class, scrape_spell
 
-CLASS = "paladin"
+CLASS = "Paladin"
 spell_cache = {}
 
 app = Flask(__name__)
-spells = spellize(scrape_class(CLASS))
 
 @app.route('/')
-def index(spells = spells):
-	return render_template("spell_table.html", title='Paladin Spells', spells = spells)
+def index(class_name = CLASS):
+	return render_template("spell_table.html", title=f'{class_name} Spells', spells = [])
+
+@app.route('/class/<class_name>', methods=['GET'])
+def class_spells(class_name):
+	spells = spellize(scrape_class(class_name.lower()))
+	return render_template("spell_table.html", title=f'{class_name} Spells', spells = spells)
 
 @app.route('/spell/<spell_name>', methods=['GET'])
 def spell(spell_name):
 	if spell_name in spell_cache:
 		content = spell_cache[spell_name]
 	else:
-		content = str(scrape_spell(spell_name))
+		content = scrape_spell(spell_name)
 		spell_cache[spell_name] = content
 	return content
 

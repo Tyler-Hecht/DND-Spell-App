@@ -54,4 +54,8 @@ def scrape_spell(spell_name):
     soup = BeautifulSoup(html, "html.parser")
 
     # get div with id "page-content"
-    return soup.find("div", {"id": "page-content"})
+    content = soup.find("div", {"id": "page-content"})
+    # remove the last <p> tag
+    content.find_all("p")[-1].decompose()
+
+    return str(content)

@@ -20,15 +20,24 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
-  <script src="{{ url_for('static', filename='search.js') }}"></script>
+
   <body>
     <div class="container">
+      <!-- title -->
       <span class="br" style="--h: 0.8em;"></span>
-      <h1>{{ title }}</h1>
+      <h2>{{ title }}</h2>
+      <span class="br" style="--h: 0.8em;"></span>
+      <select class="form-select" aria-label="Default select example" onchange="classChange(this)">
+        <option selected>Select Class</option>
+        <option value="Paladin">Paladin</option>
+      </select>
       <span class="br" style="--h: 1em;"></span>
+
+      <!-- search bar -->
       <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus">
       <span class="br" style="--h: 0.3em;"></span>
-      <!-- split page in two columns with content block -->
+
+      <!-- split page in two columns -->
       <div class="row">
         <div class="col-md-7">
           {% block content %}{% endblock %}
@@ -40,6 +49,17 @@
     </div>
 
 
-    {% block scripts %}{% endblock %}
+    <script src="{{ url_for('static', filename='sorting.js') }}"></script>
+    <script src="{{ url_for('static', filename='search.js') }}"></script>
+    <script>
+      // change class and send get request
+      function classChange(select) {
+        var selected = select.options[select.selectedIndex].value;
+        $.get("/class/" + selected, function(data, status) {
+          // make entire page reload
+          window.location.href = "/class/" + selected;
+        });
+      }
+    </script>
   </body>
 </html>
