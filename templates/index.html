@@ -58,7 +58,13 @@
         <div class="col-md-3" style="width: 22.5%">
           {% block levels %}{% endblock %}
         </div>
-        <div class="col-md-6" style="width: 42.5%">
+        <div class="col-md-3" style="width: 12.5%">
+          {% block school %}{% endblock %}
+          <span class="br" style="--h: 0.25em;"></span>
+          {% block castingTime %}{% endblock %}
+        </div>
+        <div class="col-md-3" style="width: 10%">
+          {% block range %}{% endblock %}
         </div>
       </div>
       <span class="br" style="--h: 0.5em;"></span>
@@ -68,25 +74,46 @@
         <div class="col-md-7" id="table-content">
           <!-- table -->
         </div>
-        <div class="col-md-5">
-          <p id="sidebar-text" style="background-color: white;">
+        <div class="col-md-5" id="sidebar">
+          <!-- add button to top right -->
+          <!-- makes the button start off hidden -->
+          <button type="button" class="btn-close" aria-label="Close" id="close-sidebar" style="float: right;" hidden></button>
+            <p id="sidebar-text" style="background-color: white;" hidden>
             Click on a spell to see more information.
           </p>
         </div>
+        <script>
+          // close sidebar when button is clicked
+          $("#close-sidebar").click(function() {
+            // add hidden attribute to sidebar
+            $("#close-sidebar").attr("hidden", true);
+            // set sidebar text to default
+            $("#sidebar-text").html("Click on a spell to see more information.");
+          });
+        </script>
     </div>
 
-
-    <script src="{{ url_for('static', filename='sorting.js') }}"></script>
     <script src="{{ url_for('static', filename='search.js') }}"></script>
+
     <script>
       function classChange(select) {
         var selected = select.options[select.selectedIndex].value;
         $.get("/class/" + selected, function(data) {
           // Update the table content without changing the URL
           $("#table-content").html(data);
+          // make sidebar visible
+          if (selected != "Select Class") {
+            $("#sidebar").removeAttr("hidden");
+          } else {
+            $("#sidebar").attr("hidden", true);
+          }
         });
         // change title
-        $("#title").html("<h3>" + selected + " Spells</h3>");
+        if (selected != "Select Class") {
+          $("#title").html("<h3>" + selected + " Spells</h3>");
+        } else {
+          $("#title").html("<h3>DND Spells</h3>");
+        }
       }
     </script>
   </body>

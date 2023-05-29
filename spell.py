@@ -29,11 +29,35 @@ def spell_to_dict(spell):
 def filter_spells(config, spell_list):
     spells = []
     for spell in spell_list:
-        if config["query"] is not None and config["query"] != "":
+        print(spell.name, spell.range)
+        if config["query"] is not None:
             if config["query"].lower() not in spell.name.lower():
                 continue
         if config["levels"] != []:
             if int(spell.level) not in config["levels"]:
                 continue
+        if config["school"] is not None:
+            if config["school"].lower() != spell.school.lower():
+                continue
+        if config["casting_time"] is not None:
+            if config["casting_time"] != spell.casting_time.lower():
+                continue
+        if config["range"] is not None:
+            if spell.range in ["Self", "Touch"]:
+                if config["range"].lower() != spell.range.lower():
+                    continue
+            elif "Self" in spell.range:
+                if config["range"] != "Self (aoe)":
+                    continue
+            elif spell.range in ["Sight", "Unlimited", "Special"]:
+                if config["range"] not in ["10", "30", "60", "120"]:
+                    continue
+            else:
+                feet = int(spell.range.split(" ")[0])
+                if "mile" in spell.range:
+                    feet *= 5280
+                if feet < int(config["range"]):
+                    continue
+
         spells.append(spell)
     return spells

@@ -1,4 +1,6 @@
 function search() {
+    // make visible the sidebar
+    $("#sidebar").css("display", "block");
     formData = {
         "query": $("#search").val()
     }
@@ -9,3 +11,4 @@ function search() {
         $("#table-content").html(data);
     });
   }
+

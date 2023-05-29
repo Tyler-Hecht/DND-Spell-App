@@ -1,5 +1,7 @@
+// This file is really messy right now, will clean up later
+
 // Generic property class
-class Property {
+class OtherDDD {
   constructor(value) {
     this.value = value;
   }
@@ -246,8 +248,8 @@ function compare(a_primary, b_primary, a_level, b_level, headerName) {
       a_primary = new Duration(a_primary);
       b_primary = new Duration(b_primary);
     } else {
-      a_primary = new Property(a_primary);
-      b_primary = new Property(b_primary);
+      a_primary = new OtherDDD(a_primary);
+      b_primary = new OtherDDD(b_primary);
     }
     if (a_primary.lt(b_primary)) {
       return -1;

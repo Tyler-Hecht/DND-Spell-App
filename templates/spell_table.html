@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             {% for spell in spells %}
-            <tr>
+            <tr onclick="showDetails(this)">
                 <td>{{ spell.level }}</td>
                 <td>{{ spell.name }}</td>
                 <td>{{ spell.school }}</td>
@@ -45,19 +45,20 @@
 </div>
   
 <script src="{{ url_for('static', filename='color.js') }}"></script>
+<script src="{{ url_for('static', filename='sorting.js') }}"></script>
 
 <script>
   // when a row is clicked, show the spell details in the sidebar
-  $(document).ready(function() {
-    $("#data tr").click(function() {
+    function showDetails(row) {
       // get the spell name
-      var name = $(this).find("td").eq(1).html();
+      var name = row.cells[1].innerHTML;
       // get the spell details
       $.get("/spell/" + name, function(data) {
-        // Update the sidebar without changing the URL
-        $("#sidebar-text").html(data);
+          // update the sidebar
+          $("#sidebar-text").html(data);
+          // remove hidden attribute from sidebar
+          $("#close-sidebar").removeAttr("hidden");
       });
-    });
-  });
+    }
 </script>
 

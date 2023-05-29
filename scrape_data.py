@@ -28,14 +28,21 @@ def scrape_class(class_name):
             name = name.text
             info = {}
 
+            # special cases, often due to inconsistent formatting
             for property, data in zip(properties, spell.find_all("td")):
                 if "Feet" in data.text:
                     info[property] = data.text.lower()
+                elif "ft" in data.text:
+                    info[property] = data.text.replace("ft", " feet")
                 elif "Days" in data.text:
                     info[property] = data.text.replace("Days", "days")
-                elif "action" in data.text:
+                elif data.text == "Reaction":
+                    info[property] = "1 Reaction"
+                elif "action" in data.text and "reaction" not in data.text.lower():
                     info[property] = data.text.replace("action", "Action")
-                else:
+                elif data.text == "15-foot cone":
+                    info[property] = "Self (15-foot cone)"
+                else: # normal case
                     info[property] = data.text
 
             # if name is Melf's Minute Meteors, casting time is 1 Action and range is Self
@@ -85,5 +92,6 @@ def scrape_spell(spell_name):
     # make all hyperlinks into normal text (no longer clickable)
     for link in content.find_all("a"):
         link.replaceWithChildren()
+    
 
     return str(content)

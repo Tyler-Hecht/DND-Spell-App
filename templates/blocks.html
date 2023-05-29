@@ -62,3 +62,98 @@
 </script>
 
 {% endblock %}
+
+{% block school %}
+
+<!-- dropdown -->
+<div class="dropdown">
+  <select id="school" name="school" onchange="schoolSearch()" style="width: 125px;">
+    <option value="School">School</option>
+    <option value="Abjuration">Abjuration</option>
+    <option value="Conjuration">Conjuration</option>
+    <option value="Divination">Divination</option>
+    <option value="Enchantment">Enchantment</option>
+    <option value="Evocation">Evocation</option>
+    <option value="Illusion">Illusion</option>
+    <option value="Necromancy">Necromancy</option>
+    <option value="Transmutation">Transmutation</option>
+  </select>
+</div>
+
+<script>
+  function schoolSearch() {
+    let formData = {
+      'school': $('select[name=school]').val(),
+    };
+    $.post("/schoolSearch", formData, function(data) {
+      $("#table-content").html(data);
+    })
+  }
+</script>
+
+{% endblock %}
+
+{% block castingTime %}
+
+<!-- dropdown with castingTime options -->
+<div class="dropdown">
+  <select id="castingTime" name="castingTime" onchange="castingTimeSearch()" style="width: 125px;">
+    <option value="Casting Time">Casting Time</option>
+    <option value="1 action">Action</option>
+    <option value="1 bonus action">Bonus Action</option>
+    <option value="1 reaction">Reaction</option>
+  </select>
+</div>
+
+<script>
+  // when a dropdown option is selected, update the table
+  function castingTimeSearch() {
+    var castingTime = document.getElementById("castingTime").value;
+
+    // send get request and pass selected option as json
+    let formData = {
+      "castingTime": castingTime}
+    $.post("/castingTimeSearch", formData)
+      .done(function(data) {
+        // update table
+        $("#table-content").html(data);
+      });
+  }
+</script>
+
+{% endblock %}
+
+{% block range %}
+
+<!-- dropdown with range options -->
+<div class="dropdown">
+  <select id="range" name="range" onchange="rangeSearch()" style="width: 125px;">
+    <option value="Range">Range</option>
+    <option value="Self">Self</option>
+    <option value="Self (aoe)">Self (aoe)</option>
+    <option value="Touch">Touch</option>
+    <option value="10">≥10 feet</option>
+    <option value="30">≥30 feet</option>
+    <option value="60">≥60 feet</option>
+    <option value="90">≥90 feet</option>
+    <option value="120">≥120 feet</option>
+  </select>
+</div>
+
+<script>
+  // when a dropdown option is selected, update the table
+  function rangeSearch() {
+    var range = document.getElementById("range").value;
+
+    // send get request and pass selected option as json
+    let formData = {
+      "range": range}
+    $.post("/rangeSearch", formData)
+      .done(function(data) {
+        // update table
+        $("#table-content").html(data);
+      });
+  }
+</script>
+
+{% endblock %}
