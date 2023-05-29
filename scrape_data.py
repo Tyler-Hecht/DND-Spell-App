@@ -30,17 +30,17 @@ def scrape_class(class_name):
 
             # special cases, often due to inconsistent formatting
             for property, data in zip(properties, spell.find_all("td")):
-                if "Feet" in data.text:
+                if "Feet" in data.text and property == "Range":
                     info[property] = data.text.lower()
-                elif "ft" in data.text:
+                elif "ft" in data.text and property == "Range":
                     info[property] = data.text.replace("ft", " feet")
-                elif "Days" in data.text:
+                elif "Days" in data.text and property == "Duration":
                     info[property] = data.text.replace("Days", "days")
-                elif data.text == "Reaction":
+                elif data.text == "Reaction" and property == "Casting Time":
                     info[property] = "1 Reaction"
-                elif "action" in data.text and "reaction" not in data.text.lower():
+                elif "action" in data.text and "reaction" not in data.text.lower() and property == "Casting Time":
                     info[property] = data.text.replace("action", "Action")
-                elif data.text == "15-foot cone":
+                elif data.text == "15-foot cone" and property == "Range":
                     info[property] = "Self (15-foot cone)"
                 else: # normal case
                     info[property] = data.text
