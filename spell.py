@@ -29,7 +29,6 @@ def spell_to_dict(spell):
 def filter_spells(config, spell_list):
     spells = []
     for spell in spell_list:
-        print(spell.name, spell.range)
         if config["query"] is not None:
             if config["query"].lower() not in spell.name.lower():
                 continue
