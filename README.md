@@ -9,7 +9,7 @@ More features will be added soon
 
 ## Running
 
-1. Install Python and pip\
+1. Install Python and pip
 2. Install requirements with `pip install -r requirements.txt`
 3. Start the app by running the .bat file
 4. In a browser, go to localhost:5000
