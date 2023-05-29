@@ -157,3 +157,97 @@
 </script>
 
 {% endblock %}
+
+{% block duration %}
+<!-- dropdown with duration options -->
+<div class="dropdown">
+  <select id="duration" name="duration" onchange="durationSearch()" style="width: 125px;">
+    <option value="Duration">Duration</option>
+    <option value="Instantaneous">Instantaneous</option>
+    <option value="1 round">≥1 round</option>
+    <option value="1 minute">≥1 minute</option>
+    <option value="10 minutes">≥10 minutes</option>
+    <option value="1 hour">≥1 hour</option>
+    <option value="8 hours">≥8 hours</option>
+    <option value="24 hours">≥24 hours</option>
+  </select>
+</div>
+
+<script>
+  // when a dropdown option is selected, update the table
+  function durationSearch() {
+    var duration = document.getElementById("duration").value;
+
+    // send get request and pass selected option as json
+    let formData = {
+      "duration": duration}
+    $.post("/durationSearch", formData)
+      .done(function(data) {
+        // update table
+        $("#table-content").html(data);
+      });
+  }
+</script>
+
+{% endblock %}
+
+{% block components %}
+<!-- dropdown with components options -->
+<select id="components" name="components" onchange="componentsSearch()" style="width: 125px;">
+  <option value="Components">Components</option>
+  <option value="V">V</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="V, S">V, S</option>
+  <option value="V, M">V, M</option>
+  <option value="S, M">S, M</option>
+  <option value="V, S, M">V, S, M</option>
+</select>
+
+<script>
+  // when a dropdown option is selected, update the table
+  function componentsSearch() {
+    var components = document.getElementById("components").value;
+
+    // send get request and pass selected option as json
+    let formData = {
+      "components": components}
+    $.post("/componentsSearch", formData)
+      .done(function(data) {
+        // update table
+        $("#table-content").html(data);
+      });
+  }
+
+</script>
+
+{% endblock %}
+
+{% block concentration %}
+
+<!-- dropdown with concentration options -->
+<div class="dropdown">
+  <select id="concentration" name="concentration" onchange="concentrationSearch()" style="width: 125px;">
+    <option value="Concentration">Concentration</option>
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+</div>
+
+<script>
+  // when a dropdown option is selected, update the table
+  function concentrationSearch() {
+    var concentration = document.getElementById("concentration").value;
+
+    // send get request and pass selected option as json
+    let formData = {
+      "concentration": concentration}
+    $.post("/concentrationSearch", formData)
+      .done(function(data) {
+        // update table
+        $("#table-content").html(data);
+      });
+  }
+</script>
+
+{% endblock %}

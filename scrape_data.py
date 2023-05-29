@@ -57,10 +57,9 @@ def scrape_class(class_name):
                 level = 0
             info["Level"] = level
 
-            if info["Casting Time"][-2:] == " R":
-                info["Casting Time"] = info["Casting Time"][:-2]
-            if info["School"][-2:] == " R":
-                info["School"] = info["School"][:-2]
+            for property in properties:
+                if info[property][-2:] in [" R", " T"]:
+                    info[property] = info[property][:-2]
 
             spells.append(info)
 

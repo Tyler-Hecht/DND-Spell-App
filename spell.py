@@ -52,11 +52,49 @@ def filter_spells(config, spell_list):
                 if config["range"] not in ["10", "30", "60", "120"]:
                     continue
             else:
+                if config["range"] in ["Self", "Touch", "Self (aoe)"]:
+                    continue
                 feet = int(spell.range.split(" ")[0])
                 if "mile" in spell.range:
                     feet *= 5280
                 if feet < int(config["range"]):
                     continue
+        if config["duration"] is not None:
+            if config["duration"] == "Instantaneous":
+                if spell.duration != "Instantaneous":
+                    continue
+            elif "Until dispelled" not in spell.duration:
+                if spell.duration == "Instantaneous":
+                    continue
+                if spell.duration == "Special":
+                    minutes_spell = 1440
+                else:
+                    minutes_spell = int(spell.duration.split(" ")[-2])
+                    if "hour" in spell.duration:
+                        minutes_spell *= 60
+                    if "day" in spell.duration:
+                        minutes_spell *= 1440
+                    if "round" in spell.duration:
+                        minutes_spell *= 0.1
+                # same thing for config["duration"]
+                minutes_config = int(config["duration"].split(" ")[-2])
+                if "hour" in config["duration"]:
+                    minutes_config *= 60
+                if "day" in config["duration"]:
+                    minutes_config *= 1440
+                if "round" in config["duration"]:
+                    minutes_config *= 0.1
+                if minutes_spell < minutes_config:
+                    continue
+        if config["components"] is not None:
+            if spell.components != config["components"]:
+                continue
+        if config["concentration"] is not None:
+            if config["concentration"] == "Yes":
+                if "Concentration" not in spell.duration:
+                    continue
+            elif "Concentration" in spell.duration:
+                continue
 
         spells.append(spell)
     return spells

@@ -7,12 +7,15 @@ spell_cache = {}
 spell_list_cache = {}
 config = {
 	"query": None,
-    "class": None,
-    "show": 0,
-    "levels": [],
-    "school": None,
-    "casting_time": None,
-    "range": None
+	"class": None,
+	"show": 0,
+	"levels": [],
+	"school": None,
+	"casting_time": None,
+	"range": None,
+	"duration": None,
+	"concentration": None,
+	"components": None
 }
 
 def updateTable(config, spell_list_cache):
@@ -28,7 +31,27 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+	# reset config
+	config["query"] = None
+	config["class"] = None
+	config["show"] = 0
+	config["levels"] = []
+	config["school"] = None
+	config["casting_time"] = None
+	config["range"] = None
+	config["duration"] = None
+	config["concentration"] = None
+	config["components"] = None
 	return render_template("blocks.html")
+
+@app.route('/spell/<spell_name>', methods=['GET'])
+def spell(spell_name):
+	if spell_name in spell_cache:
+		content = spell_cache[spell_name]
+	else:
+		content = scrape_spell(spell_name)
+	spell_cache[spell_name] = content
+	return content
 
 @app.route('/class/<class_name>', methods=['GET'])
 def class_spells(class_name):
@@ -41,7 +64,6 @@ def class_spells(class_name):
 	else:
 		spells = spellize(scrape_class(class_name.lower()))
 		spell_list_cache[class_name] = spells
-	spells_data = [spell_to_dict(spell) for spell in spells]
 	if class_name in ["Paladin", "Ranger"]:
 		config["show"] = 1
 	else:
@@ -87,11 +109,26 @@ def rangeSearch():
 		config["range"] = None
 	return updateTable(config, spell_list_cache)
 
-@app.route('/spell/<spell_name>', methods=['GET'])
-def spell(spell_name):
-	if spell_name in spell_cache:
-		content = spell_cache[spell_name]
+@app.route('/durationSearch', methods=['POST'])
+def durationSearch():
+	if request.form["duration"] != "Duration":
+		config["duration"] = request.form["duration"]
 	else:
-		content = scrape_spell(spell_name)
-	spell_cache[spell_name] = content
-	return content
+		config["duration"] = None
+	return updateTable(config, spell_list_cache)
+
+@app.route('/componentsSearch', methods=['POST'])
+def componentsSearch():
+	if request.form["components"] != "Components":
+		config["components"] = request.form["components"]
+	else:
+		config["components"] = None
+	return updateTable(config, spell_list_cache)
+
+@app.route('/concentrationSearch', methods=['POST'])
+def concentrationSearch():
+	if request.form["concentration"] != "Concentration":
+		config["concentration"] = request.form["concentration"]
+	else:
+		config["concentration"] = None
+	return updateTable(config, spell_list_cache)
