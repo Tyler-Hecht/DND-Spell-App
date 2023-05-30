@@ -8,11 +8,7 @@
           display: block;
           margin-bottom: var(--h);
       }
-      .scrollit {
-        overflow:scroll;
-        height:480px;
-        overflow-x:hidden;
-      }
+
       /* make container wider */
       .container {
         max-width: 1250px;
@@ -28,9 +24,11 @@
 
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- include scrollbar.css file -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='scrollbar.css') }}"></link>
   </head>
 
-  <body style="background-color: #f9f7ed;">
+  <body style="background-color: #f9f7ed;" id="body">
     <div class="container">
       <!-- title -->
       <span class="br" style="--h: 0.8em;"></span>
@@ -63,7 +61,7 @@
           <span class="br" style="--h: 0.3em;"></span>
           <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus" id="search">
         </div>
-        <div class="col-md-3" style="width: 22.5%">
+        <div class="col-md-3" style="width: 22%">
           {% block levels %}{% endblock %}
         </div>
         <div class="col-md-2" style="width: 11.5%">
@@ -75,12 +73,14 @@
           {% block duration %}{% endblock %}
           <span class="br" style="--h: 0.25em;"></span>
           {% block concentration %}{% endblock %}
-
         </div>
-        <div class="col-md-2" style="width: 17.5%">
+        <div class="col-md-2" style="width: 12.5%">
           {% block range %}{% endblock %}
           <span class="br" style="--h: 0.25em;"></span>
           {% block components %}{% endblock %}
+        </div>
+        <div class="col-md-1" style="width: 7.5%">  
+          <!-- for later -->
         </div>
       </div>
       <span class="br" style="--h: 0.5em;"></span>
@@ -143,12 +143,15 @@
             $("#default-text").attr("hidden", true);
             $("#filters").removeAttr("hidden");
             if (selected == "Paladin") {
+              document.getElementsByClassName("scrollit")[0].id = "paladin";
               $("#fullCaster").attr("hidden", true);
               $("body").css("background-color", "#f5dab1");
-            } else if (selected == "Sorcerer") {
+            } else if (selected == "Sorcerer") {  
+              document.getElementsByClassName("scrollit")[0].id = "sorcerer";
               $("#fullCaster").removeAttr("hidden");
               $("body").css("background-color", "#b1d9f5");
             } else if (selected == "Bard") {
+              document.getElementsByClassName("scrollit")[0].id = "bard";
               $("#fullCaster").removeAttr("hidden");
               $("body").css("background-color", "#d9b1f5");
             }
