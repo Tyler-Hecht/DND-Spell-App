@@ -4,6 +4,12 @@
     <title>{{ title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <style>
+
+      /* apply font to entire page */
+      html * {
+        font-family: 'Tangerine', serif;
+      }
+
       .br {
           display: block;
           margin-bottom: var(--h);
@@ -20,6 +26,16 @@
         padding-right: 30px;
         padding-top: 15px;
         padding-bottom: 15px;
+      }
+
+      #table-content {
+        background-image: url("{{ url_for('static', filename='frame.png') }}");
+        /* contain image */
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        padding: 20px;
+        padding-right: 0px;
+        border-radius: 10px;
       }
 
     </style>
@@ -87,7 +103,7 @@
 
       <!-- table and sidebar -->
       <div class="row">
-        <div class="col-md-7" id="table-content">
+        <div class="col-md-7" id="table-content" hidden>
           <!-- table -->
         </div>
         <div class="col-md-5" id="sidebar">
@@ -129,17 +145,14 @@
           } else {
             $("#title").html("<h3>DND Spells</h3>");
           }
-          // change background color
-          // select class: white
-          // paladin: light orange
-          // sorcerer: light blue
-          // bard: light purple
 
           if (selected == "Select Class") {
+            $("#table-content").attr("hidden", true);
             $("#default-text").removeAttr("hidden");
             $("#filters").attr("hidden", true);
             $("body").css("background-color", "#f9f7ed");
           } else {
+            $("#table-content").removeAttr("hidden");
             $("#default-text").attr("hidden", true);
             $("#filters").removeAttr("hidden");
             if (selected == "Paladin") {

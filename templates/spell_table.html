@@ -1,47 +1,44 @@
 <div class="scrollit">
-    <style>
-      .table {
-        font-size: 0.9em;
-      }
-    </style>
-    <div id="table-content">
-      <!-- table black border to top and left -->
-      <table id="data" class="table" style="border-top: 1px solid black; border-left: 1px solid black;">
-        <!-- fix column widths -->
-        <colgroup>
-            <col style="width: 5%">
-            <col style="width: 20%">
-            <col style="width: 10%">
-            <col style="width: 25%">
-            <col style="width: 10%">
-            <col style="width: 22.5%">
-            <col style="width: 7.5%">
-        </colgroup>
-        <thead style="background-color: rgba(255, 255, 255, 0.75);">
-            <th>Level</th>
-            <th>Name</th>
-            <th>School</th>
-            <th>Casting Time</th>
-            <th>Range</th>
-            <th>Duration</th>
-            <th>Components</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for spell in spells %}
-            <tr onclick="showDetails(this)">
-                <td>{{ spell.level }}</td>
-                <td>{{ spell.name }}</td>
-                <td>{{ spell.school }}</td>
-                <td>{{ spell.casting_time }}</td>
-                <td>{{ spell.range }}</td>
-                <td>{{ spell.duration }}</td>
-                <td>{{ spell.components }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-    </div>
+  <style>
+    .table {
+      font-size: 0.9em;
+    }
+  </style>
+  <table id="data" class="table">
+    <!-- fix column widths -->
+    <colgroup>
+        <col style="width: 5%">
+        <col style="width: 20%">
+        <col style="width: 10%">
+        <col style="width: 25%">
+        <col style="width: 10%">
+        <col style="width: 22.5%">
+        <col style="width: 7.5%">
+    </colgroup>
+    <thead style="background-color: rgba(255, 255, 255, 1);">
+        <th>Level</th>
+        <th>Name</th>
+        <th>School</th>
+        <th>Casting Time</th>
+        <th>Range</th>
+        <th>Duration</th>
+        <th>Components</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for spell in spells %}
+        <tr onclick="showDetails(this)">
+            <td>{{ spell.level }}</td>
+            <td>{{ spell.name }}</td>
+            <td>{{ spell.school }}</td>
+            <td>{{ spell.casting_time }}</td>
+            <td>{{ spell.range }}</td>
+            <td>{{ spell.duration }}</td>
+            <td>{{ spell.components }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
 </div>
   
 <script src="{{ url_for('static', filename='color.js') }}"></script>
