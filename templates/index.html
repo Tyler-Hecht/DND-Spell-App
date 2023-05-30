@@ -28,16 +28,6 @@
         padding-bottom: 15px;
       }
 
-      #table-content {
-        background-image: url("{{ url_for('static', filename='frame.png') }}");
-        /* contain image */
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        padding: 20px;
-        padding-right: 0px;
-        border-radius: 10px;
-      }
-
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- include scrollbar.css file -->
@@ -111,8 +101,8 @@
           <!-- makes the button start off hidden -->
           <button type="button" class="btn-close" aria-label="Close" id="close-sidebar" style="float: right;" hidden></button>
             <p id="sidebar-text" hidden>
-            Click on a spell to see more information.
-          </p>
+              Click on a spell to see more information.
+            </p>
         </div>
         <script>
           // close sidebar when button is clicked
@@ -145,6 +135,10 @@
           } else {
             $("#title").html("<h3>DND Spells</h3>");
           }
+
+          // hide sidebar when class is changed
+          $("#close-sidebar").attr("hidden", true);
+          $("#sidebar-text").html("Click on a spell to see more information.");
 
           if (selected == "Select Class") {
             $("#table-content").attr("hidden", true);
