@@ -1,7 +1,7 @@
 .scrollit {
     overflow:scroll;
     height:440px;
-    overflow-x:hidden;
+    overflow-x:auto;
   }
 
 .scrollit::-webkit-scrollbar {
@@ -11,17 +11,13 @@
 .scrollit::-webkit-scrollbar-track {
   background: url("vertical_scroll.png");
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
-  background-size: contain;
-}
-
-.scrollit::-webkit-scrollbar-corner {
-  background: url("vertical_scroll.png");
-  background-size: contain;
+  background-size: 100% 100%;
 }
 
 
 #paladin::-webkit-scrollbar-thumb {
   background: -webkit-radial-gradient(rgba(248, 247, 240, 0.5), #f5dab1);
+  border-radius: 3px;
 }
 
 #paladin::-webkit-scrollbar-thumb:hover {
@@ -30,6 +26,7 @@
 
 #sorcerer::-webkit-scrollbar-thumb {
   background: -webkit-radial-gradient(rgba(248, 247, 240, 0.5), #b1d9f5);
+  border-radius: 3px;
 }
 
 #sorcerer::-webkit-scrollbar-thumb:hover {
@@ -38,6 +35,7 @@
 
 #bard::-webkit-scrollbar-thumb {
   background: -webkit-radial-gradient(rgba(248, 247, 240, 0.5), #d9b1f5);
+  border-radius: 3px;
 }
 
 #bard::-webkit-scrollbar-thumb:hover {
