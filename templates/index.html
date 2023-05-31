@@ -4,13 +4,29 @@
     <title>{{ title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=IM Fell DW Pica' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet'>
     <style>
+      ::selection {
+        background-color: rgba(0, 0, 255, 0.1);
+      }
 
-      option, select {
+      option, select, input {
         font-family: 'IM Fell DW Pica';
         background-color: rgba(255, 255, 255, 0.5);
         border-color: rgb(100, 100, 100);
         border-radius: 5px;
+      }
+
+      button {
+        float: right;
+        margin-top: 10px;
+        background-size: 100% 100%;
+        height: 40px;
+        width: 40px;
+        /* no border */
+        border: none;
+        /* transparent background */
+        background-color: transparent;
       }
 
       .br {
@@ -60,7 +76,9 @@
         background-clip: content-box;
       }
 
-
+      #sidebar {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
 
     </style>
 
@@ -74,15 +92,23 @@
       <!-- title -->
       <span class="br" style="--h: 0.8em;"></span>
       <div class="row">
-        <div class="col-md-10" id="title">
+        <div class="col-md-10" id="title" style="font-family: 'Cinzel', serif;">
           <h3>DND Spells</h3>
         </div>
         <div class="col-md-2">
           <select class="form-select" aria-label="Default select example" onchange="classChange(this)" style="float: right; background-color: rgba(255, 255, 255, 0.5); border-color: rgb(100, 100, 100);">
-            <option selected>Select Class</option>
-            <option value="Paladin">Paladin</option>
-            <option value="Sorcerer">Sorcerer</option>
-            <option value="Bard">Bard</option>
+            <option selected>
+              Select Class
+            </option>
+            <option value="Paladin">
+              Paladin
+            </option>
+            <option value="Sorcerer">
+              Sorcerer
+            </option>
+            <option value="Bard">
+              Bard
+            </option>
           </select>
         </div>
       </div>
@@ -132,9 +158,8 @@
           <!-- table -->
         </div>
         <div class="col-md-5" id="sidebar">
-          <!-- add button to top right -->
-          <!-- makes the button start off hidden -->
-          <button type="button" class="btn-close" aria-label="Close" id="close-sidebar" style="float: right;" hidden></button>
+          <!-- shift button down 10 pixels -->
+          <button type="button" aria-label="Close" id="close-sidebar" hidden></button>
             <p id="sidebar-text" hidden>
               Click on a spell to see more information.
             </p>
@@ -152,54 +177,7 @@
 
     <script src="{{ url_for('static', filename='search.js') }}"></script>
 
-    <script>
-      function classChange(select) {
-        var selected = select.options[select.selectedIndex].value;
-        $.get("/class/" + selected, function(data) {
-          // Update the table content without changing the URL
-          $("#table-content").html(data);
-          // make sidebar visible
-          if (selected != "Select Class") {
-            $("#sidebar-text").removeAttr("hidden");
-          } else {
-            $("#sidebar-text").attr("hidden", true);
-          }
-          // change title
-          if (selected != "Select Class") {
-            $("#title").html("<h3>" + selected + " Spells</h3>");
-          } else {
-            $("#title").html("<h3>DND Spells</h3>");
-          }
-
-          // hide sidebar when class is changed
-          $("#close-sidebar").attr("hidden", true);
-          $("#sidebar-text").html("Click on a spell to see more information.");
-
-          if (selected == "Select Class") {
-            $("#table-content").attr("hidden", true);
-            $("#default-text").removeAttr("hidden");
-            $("#filters").attr("hidden", true);
-            $("body").css("background-color", "#f9f7ed");
-          } else {
-            $("#table-content").removeAttr("hidden");
-            $("#default-text").attr("hidden", true);
-            $("#filters").removeAttr("hidden");
-            if (selected == "Paladin") {
-              document.getElementsByClassName("scrollit")[0].id = "paladin";
-              $("#fullCaster").attr("hidden", true);
-              $("body").css("background-color", "#f5dab1");
-            } else if (selected == "Sorcerer") {  
-              document.getElementsByClassName("scrollit")[0].id = "sorcerer";
-              $("#fullCaster").removeAttr("hidden");
-              $("body").css("background-color", "#b1d9f5");
-            } else if (selected == "Bard") {
-              document.getElementsByClassName("scrollit")[0].id = "bard";
-              $("#fullCaster").removeAttr("hidden");
-              $("body").css("background-color", "#d9b1f5");
-            }
-          }
-        });
-      }
-    </script>
+    <!-- include classChange.js -->
+    <script src="{{ url_for('static', filename='classChange.js') }}"></script>
   </body>
 </html>

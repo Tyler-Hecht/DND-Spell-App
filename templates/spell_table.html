@@ -70,6 +70,8 @@
           $("#sidebar-text").html(data);
           // remove hidden attribute from sidebar
           $("#close-sidebar").removeAttr("hidden");
+          // set the close-sidebar background-image to evocation.png
+          $("#close-sidebar").css("background-image", "url({{ url_for('static', filename='evocation.png') }})");
       });
     }
 </script>
