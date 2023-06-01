@@ -66,12 +66,11 @@
       var name = row.cells[1].innerHTML;
       // get the spell details
       $.get("/spell/" + name, function(data) {
-          // update the sidebar
           $("#sidebar-text").html(data);
-          // remove hidden attribute from sidebar
           $("#close-sidebar").removeAttr("hidden");
-          // set the close-sidebar background-image to evocation.png
-          $("#close-sidebar").css("background-image", "url({{ url_for('static', filename='evocation.png') }})");
+          var school = row.cells[2].innerHTML;
+          // change close-sidebar's background image to match school
+          $("#close-sidebar").css("background-image", "url(\"{{ url_for('static', filename='symbols') }}/" + school + ".png\")");
       });
     }
 </script>
