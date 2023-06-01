@@ -64,8 +64,14 @@
     function showDetails(row) {
       // get the spell name
       var name = row.cells[1].innerHTML;
+      // replace / with -
+      name = name.replace("/", "-");
       // get the spell details
       $.get("/spell/" + name, function(data) {
+          $("#spell-title").html(row.cells[1].innerHTML);
+          $("#spell-title").removeAttr("hidden");
+          $("#sidebar-text").removeAttr("hidden");
+          $("#sidebar-default-text").attr("hidden", true);
           $("#sidebar-text").html(data);
           $("#close-sidebar").removeAttr("hidden");
           var school = row.cells[2].innerHTML;

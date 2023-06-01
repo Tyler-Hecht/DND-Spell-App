@@ -18,14 +18,19 @@ function classChange(select) {
 
         // hide sidebar when class is changed
         $("#close-sidebar").attr("hidden", true);
-        $("#sidebar-text").html("Click on a spell to see more information.");
+        $("#sidebar-text").attr("hidden", true);
+        $("#spell-title").attr("hidden", true);
 
         if (selected == "Select Class") {
+            $("#sidebar").attr("hidden", true);
             $("#table-content").attr("hidden", true);
             $("#default-text").removeAttr("hidden");
             $("#filters").attr("hidden", true);
             $("body").css("background-color", "#f9f7ed");
         } else {
+            $("#sidebar").removeAttr("hidden");
+            $("#sidebar-text").attr("hidden", true);
+            $("#sidebar-default-text").removeAttr("hidden");
             $("#table-content").removeAttr("hidden");
             $("#default-text").attr("hidden", true);
             $("#filters").removeAttr("hidden");

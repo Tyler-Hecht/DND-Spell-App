@@ -84,10 +84,6 @@ def scrape_spell(spell_name):
     # remove the last <p> tag
     content.find_all("p")[-1].decompose()
 
-    # add spell name to the top of the page
-    content.insert(0, soup.new_tag("h3"))
-    content.h3.string = spell_name
-
     # make all hyperlinks into normal text (no longer clickable)
     for link in content.find_all("a"):
         link.replaceWithChildren()

@@ -43,10 +43,10 @@
       }
 
       /* add padding to sidebar-text */
-      #sidebar-text {
+      #sidebar-text, #sidebar-default-text {
         padding-left: 5px;
         padding-right: 5px;
-        padding-top: 15px;
+        padding-top: 10px;
         padding-bottom: 15px;
       }
 
@@ -99,20 +99,7 @@
           <h3>DND Spells</h3>
         </div>
         <div class="col-md-2">
-          <select class="form-select" aria-label="Default select example" onchange="classChange(this)" style="float: right; background-color: rgba(255, 255, 255, 0.5); border-color: rgb(100, 100, 100);">
-            <option selected>
-              Select Class
-            </option>
-            <option value="Paladin">
-              Paladin
-            </option>
-            <option value="Sorcerer">
-              Sorcerer
-            </option>
-            <option value="Bard">
-              Bard
-            </option>
-          </select>
+          {% block class %}{% endblock %}
         </div>
       </div>
       <div id="default-text">
@@ -163,17 +150,25 @@
         <div class="col-md-5" id="sidebar">
           <!-- shift button down 10 pixels -->
           <button type="button" aria-label="Close" id="close-sidebar" hidden></button>
-            <p id="sidebar-text" hidden>
+            <h3 id="spell-title" style="padding-left: 5px; padding-right: 5px; padding-top: 15px;" hidden></h3>
+            <!-- center  -->
+            <p id="sidebar-default-text" hidden style="font-family: Cinzel; text-align: center; padding-top: 30px; font-size: 1.25em;">
               Click on a spell to see more information.
+            </p>
+            <p id="sidebar-text" hidden>
+              
             </p>
         </div>
         <script>
           // close sidebar when button is clicked
           $("#close-sidebar").click(function() {
-            // add hidden attribute to sidebar
+            // add hidden attribute to spell title and close button
+            $("#spell-title").attr("hidden", true);
             $("#close-sidebar").attr("hidden", true);
-            // set sidebar text to default
-            $("#sidebar-text").html("Click on a spell to see more information.");
+            // show sidebar default text
+            $("#sidebar-default-text").removeAttr("hidden");
+            // hide sidebar text
+            $("#sidebar-text").attr("hidden", true);
           });
         </script>
     </div>
