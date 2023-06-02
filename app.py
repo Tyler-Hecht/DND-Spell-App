@@ -17,15 +17,27 @@ config = {
 	"concentration": None,
 	"components": None
 }
+class_color = {
+    "Paladin": "#f5dab1",
+    "Sorcerer": "#b1d9f5",
+    "Bard": "#d9b1f5"
+}
+
+def lighten(hex_color):
+	hex_color = hex_color.lstrip('#')
+	rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+	new_rgb = tuple([int((255 - rgb[i]) / 2 + rgb[i]) for i in range(3)])
+	return '#%02x%02x%02x' % new_rgb
 
 def updateTable(config, spell_list_cache):
 	if config["class"] is not None:
 		spells = spell_list_cache[config["class"]]
 		spells = filter_spells(config, spells)
 		spells_data = [spell_to_dict(spell) for spell in spells]
-		return render_template('spell_table.html', spells=spells_data, show=config["show"])
+		return render_template('spell_table.html', spells=spells_data, show=config["show"],
+			 header_color = lighten(class_color[config["class"]]))
 	else:
-		return render_template('spell_table.html', spells=[], show=0)
+		return render_template('spell_table.html', spells=[], show=0, header_color = "#ffffff")
 
 app = Flask(__name__)
 

@@ -47,7 +47,6 @@
         padding-left: 5px;
         padding-right: 5px;
         padding-top: 10px;
-        padding-bottom: 15px;
       }
 
       body {
@@ -80,7 +79,11 @@
       }
 
       #sidebar {
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.1);
+        background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+        /* border */
+        border-radius: 5px;
+        border: 1px solid rgb(100, 100, 100);
       }
 
     </style>
@@ -104,7 +107,7 @@
       </div>
       <div id="default-text">
         <span class="br" style="--h: 2em;"></span> 
-        <p style="text-align: center; font-size: 1.75em; font-family: 'Lucida Calligraphy', sans-serif;">
+        <p style="text-align: center; font-size: 1.5em; font-family: 'Cinzel';">
           Select a class to get started!
         </p>
         <!-- goes to https://wallpapercave.com/w/wp2770237 when clicked -->
@@ -147,17 +150,15 @@
         <div class="col-md-7" id="table-content" hidden>
           <!-- table -->
         </div>
-        <div class="col-md-5" id="sidebar">
+        <div class="col-md-5" id="sidebar" hidden>
           <!-- shift button down 10 pixels -->
           <button type="button" aria-label="Close" id="close-sidebar" hidden></button>
             <h3 id="spell-title" style="padding-left: 5px; padding-right: 5px; padding-top: 15px;" hidden></h3>
             <!-- center  -->
             <p id="sidebar-default-text" hidden style="font-family: Cinzel; text-align: center; padding-top: 30px; font-size: 1.25em;">
-              Click on a spell to see more information.
+              Click on a spell to see more information
             </p>
-            <p id="sidebar-text" hidden>
-              
-            </p>
+            <p id="sidebar-text" hidden style="font-size: 1em"></p>
         </div>
         <script>
           // close sidebar when button is clicked
@@ -169,6 +170,7 @@
             $("#sidebar-default-text").removeAttr("hidden");
             // hide sidebar text
             $("#sidebar-text").attr("hidden", true);
+
           });
         </script>
     </div>

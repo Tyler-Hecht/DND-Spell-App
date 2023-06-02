@@ -16,10 +16,15 @@ function classChange(select) {
             $("#title").html("<h3>DND Spells</h3>");
         }
 
+        var paladin_color = "#f5dab1"
+        var sorcerer_color = "#b1d9f5"
+        var bard_color = "#d9b1f5"
+
         // hide sidebar when class is changed
         $("#close-sidebar").attr("hidden", true);
         $("#sidebar-text").attr("hidden", true);
         $("#spell-title").attr("hidden", true);
+        $("#sidebar").attr("hidden", true);
 
         if (selected == "Select Class") {
             $("#sidebar").attr("hidden", true);
@@ -37,15 +42,15 @@ function classChange(select) {
             if (selected == "Paladin") {
                 document.getElementsByClassName("scrollit")[0].id = "paladin";
                 $("#fullCaster").attr("hidden", true);
-                $("body").css("background-color", "#f5dab1");
+                $("body").css("background-color", paladin_color);
             } else if (selected == "Sorcerer") {  
                 document.getElementsByClassName("scrollit")[0].id = "sorcerer";
                 $("#fullCaster").removeAttr("hidden");
-                $("body").css("background-color", "#b1d9f5");
+                $("body").css("background-color", sorcerer_color);
             } else if (selected == "Bard") {
                 document.getElementsByClassName("scrollit")[0].id = "bard";
                 $("#fullCaster").removeAttr("hidden");
-                $("body").css("background-color", "#d9b1f5");
+                $("body").css("background-color", bard_color);
             }
         }
     });
