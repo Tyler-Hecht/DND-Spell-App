@@ -48,6 +48,7 @@
         padding-left: 15px;
         padding-right: 15px;
         padding-top: 10px;
+        background-color: transparent;
       }
 
       body {
@@ -80,12 +81,17 @@
       }
 
       #sidebar {
-        background-color: rgba(255, 255, 255, 0.1);
-        background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
         border: 20px solid transparent;
         border-image: url("{{ url_for('static', filename='frame.png') }}") round;
-        border-image-slice: 13;
+        border-image-slice: 13 13 10 13;
         border-image-repeat: round;
+      }
+
+      #outline {
+        background-image: url("{{ url_for('static', filename='parchment.jpg') }}");
+        background-size: cover;
+        background-repeat: repeat;
+        border: 3px solid rgba(0, 0, 0, 0.5);
       }
 
     </style>
@@ -149,20 +155,29 @@
 
       <!-- table and sidebar -->
       <!-- decrease space between columns -->
-      <div class="row">
-        <div class="col-md-7" id="table-content" hidden style="padding-top: 3px; width: 60%;" >
+      <div class="row g-2">
+        <div class="col-md-7" id="table-content" hidden style="padding-top: 3px;">
           <!-- table -->
         </div>
-        <div class="col-md-5" style="padding-top: 5px; padding-bottom: 5px; width: 40%;">
-          <div id="sidebar" hidden style="padding-bottom: 5px; padding-top: 5px;">
+        <div class="col-md-5" style="padding-top: 2px; padding-bottom: 5px;">
+          <div id="sidebar" hidden>
+          <div id="outline">
           <!-- shift button down 10 pixels -->
           <button type="button" aria-label="Close" id="close-sidebar" hidden></button>
             <h3 id="spell-title" style="padding-left: 15px; padding-right: 5px; padding-top: 10px;" hidden></h3>
             <!-- center  -->
-            <p id="sidebar-default-text" hidden style="font-family: Cinzel; text-align: center; padding-top: 20px; font-size: 1.25em;">
+            <p id="sidebar-default-text" hidden style="font-family: Cinzel; text-align: center; font-size: 1.4em;">
+              <br>
+              <br>
+              <br>
               Click on a spell to see more information
+              <br>
+              <br>
+              <br>
+              <br>
             </p>
             <p id="sidebar-text" hidden style="font-size: 1em"></p>
+          </div>
           </div>
         </div>
         <script>
