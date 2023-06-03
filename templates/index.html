@@ -19,8 +19,8 @@
 
       #close-sidebar {
         float: right;
-        margin-top: 7.5px;
-        margin-right: 7.5px;
+        margin-top: 5px;
+        margin-right: 9px;
         background-size: 100% 100%;
         height: 35px;
         width: 35px;
@@ -82,9 +82,10 @@
       #sidebar {
         background-color: rgba(255, 255, 255, 0.1);
         background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-        /* border */
-        border-radius: 5px;
-        border: 1px solid rgb(100, 100, 100);
+        border: 20px solid transparent;
+        border-image: url("{{ url_for('static', filename='frame.png') }}") round;
+        border-image-slice: 13;
+        border-image-repeat: round;
       }
 
     </style>
@@ -147,11 +148,12 @@
       <span class="br" style="--h: 0.5em;"></span>
 
       <!-- table and sidebar -->
+      <!-- decrease space between columns -->
       <div class="row">
-        <div class="col-md-7" id="table-content" hidden style="padding-top: 3px;">
+        <div class="col-md-7" id="table-content" hidden style="padding-top: 3px; width: 60%;" >
           <!-- table -->
         </div>
-        <div class="col-md-5" style="padding-top: 5px; padding-bottom: 5px;">
+        <div class="col-md-5" style="padding-top: 5px; padding-bottom: 5px; width: 40%;">
           <div id="sidebar" hidden style="padding-bottom: 5px; padding-top: 5px;">
           <!-- shift button down 10 pixels -->
           <button type="button" aria-label="Close" id="close-sidebar" hidden></button>

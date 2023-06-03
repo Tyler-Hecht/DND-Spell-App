@@ -47,12 +47,10 @@
 
 <style>
   .frame {
-        background-image: url("{{ url_for('static', filename='frame.png') }}");
-        /* contain image */
-        background-size: 100% 100%;
-        padding: 20px;
-        padding-right: 15px;
-        border-radius: 10px;
+        border: 20px solid transparent;
+        border-left: 22px solid transparent;
+        border-image: url("{{ url_for('static', filename='frame.png') }}") round;
+        border-image-slice: 13 13 13 13;
   }
   thead {
     background-color: {{ header_color }}; /* this gives an error in VSC but it doesn't know anything */

@@ -2,6 +2,8 @@
     overflow:scroll;
     height:440px;
     overflow-x:auto;
+    border: 3px solid rgba(0, 0, 0, 0.25);
+    border-right: 0px;
   }
 
 .scrollit::-webkit-scrollbar {
