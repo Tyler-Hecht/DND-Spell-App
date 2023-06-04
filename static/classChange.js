@@ -39,16 +39,15 @@ function classChange(select) {
             $("#table-content").removeAttr("hidden");
             $("#default-text").attr("hidden", true);
             $("#filters").removeAttr("hidden");
+            document.getElementsByClassName("scrollit")[0].id = selected.toLowerCase();
+            document.getElementsByClassName("scrollit")[1].id = selected.toLowerCase();
             if (selected == "Paladin") {
-                document.getElementsByClassName("scrollit")[0].id = "paladin";
                 $("#fullCaster").attr("hidden", true);
                 $("body").css("background-color", paladin_color);
             } else if (selected == "Sorcerer") {  
-                document.getElementsByClassName("scrollit")[0].id = "sorcerer";
                 $("#fullCaster").removeAttr("hidden");
                 $("body").css("background-color", sorcerer_color);
             } else if (selected == "Bard") {
-                document.getElementsByClassName("scrollit")[0].id = "bard";
                 $("#fullCaster").removeAttr("hidden");
                 $("body").css("background-color", bard_color);
             }

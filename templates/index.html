@@ -19,8 +19,8 @@
 
       #close-sidebar {
         float: right;
-        margin-top: 5px;
-        margin-right: 9px;
+        margin-top: 7.5px;
+        margin-right: 7.5px;
         background-size: 100% 100%;
         height: 35px;
         width: 35px;
@@ -40,7 +40,7 @@
 
       /* make container wider */
       .container {
-        max-width: 1250px;
+        max-width: 1260px;
       }
 
       /* add padding to sidebar-text */
@@ -52,7 +52,7 @@
       }
 
       body {
-        overflow-y: scroll;
+        overflow-y: auto;
       }
 
       body::-webkit-scrollbar {
@@ -88,10 +88,8 @@
       }
 
       #outline {
-        background-image: url("{{ url_for('static', filename='parchment.jpg') }}");
-        background-size: cover;
-        background-repeat: repeat;
         border: 3px solid rgba(0, 0, 0, 0.5);
+        overflow-y: scroll;
       }
 
     </style>
@@ -161,7 +159,7 @@
         </div>
         <div class="col-md-5" style="padding-top: 2px; padding-bottom: 5px;">
           <div id="sidebar" hidden>
-          <div id="outline">
+          <div id="outline" class="scrollit">
           <!-- shift button down 10 pixels -->
           <button type="button" aria-label="Close" id="close-sidebar" hidden></button>
             <h3 id="spell-title" style="padding-left: 15px; padding-right: 5px; padding-top: 10px;" hidden></h3>
