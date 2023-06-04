@@ -2,14 +2,14 @@ from scrape_data import scrape_spell
 
 class Spell:
     def __init__(self, level, name, school, casting_time, range, duration, components, description):
-        self.level = level
-        self.name = name
-        self.school = school
-        self.casting_time = casting_time
-        self.range = range
-        self.duration = duration
-        self.components = components
-        self.description = description
+        self.level = str(level)
+        self.name = str(name)
+        self.school = str(school)
+        self.casting_time = str(casting_time)
+        self.range = str(range)
+        self.duration = str(duration)
+        self.components = str(components)
+        self.description = (str(description[0]), str(description[1]))
 
 def spellize(df):
     spells = []
@@ -38,9 +38,7 @@ def filter_spells(config, spell_dict):
                 if config["query"].lower() not in spell.name.lower():
                     continue
             else:
-                description = spell.description.text.replace("Source:", "").replace("Casting Time:", "").replace("Range:", "").replace("Components:", "").replace("Duration:", "")
-                full_details = spell.name + spell.level + spell.school + spell.casting_time + spell.range + spell.duration + spell.components + description
-                if config["query"].lower() not in full_details.lower():
+                if config["query"].lower() not in spell.name.lower() and config["query"].lower() not in spell.description[1].lower():
                     continue
         if config["levels"] != []:
             if int(spell.level) not in config["levels"]:

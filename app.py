@@ -15,7 +15,6 @@ Uncomment this section to scrape new data (bs4, urllib, and pandas required)
 # 	spell_list = spellize(scrape_class(class_name))
 # 	for spell in spell_list:
 # 		scraped_data[class_name][spell.name] = spell
-# save scraped data to file
 # with open('scraped_data.pkl', 'wb') as f:
 # 	pickle.dump(scraped_data, f)
 
@@ -76,7 +75,7 @@ def index():
 
 @app.route('/spell/<spell_name>', methods=['GET'])
 def spell(spell_name):
-	content = scraped_data[config["class"]][spell_name].description
+	content = scraped_data[config["class"]][spell_name].description[0]
 	return content
 
 @app.route('/class/<class_name>', methods=['GET'])
@@ -94,6 +93,11 @@ def class_spells(class_name):
 @app.route('/search', methods=['POST'])
 def search():
 	config["query"] = request.form["query"]
+	return updateTable(config, scraped_data)
+
+@app.route('/nameOnly', methods=['POST'])
+def nameOnly():
+	config["name only"] = request.form["name-only"] == "true"
 	return updateTable(config, scraped_data)
 
 @app.route('/levelSearch', methods=['POST'])

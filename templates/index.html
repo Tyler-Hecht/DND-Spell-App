@@ -105,8 +105,8 @@
       <!-- title -->
       <span class="br" style="--h: 0.8em;"></span>
       <div class="row">
-        <div class="col-md-10" id="title" style="font-family: 'Cinzel', serif;">
-          <h3>DND Spells</h3>
+        <div class="col-md-10" style="font-family: 'Cinzel', serif;">
+          <h3 id = "title" style="font-weight: bold;">DND Spells</h3>
         </div>
         <div class="col-md-2">
           {% block class %}{% endblock %}
@@ -114,10 +114,9 @@
       </div>
       <div id="default-text">
         <span class="br" style="--h: 2em;"></span> 
-        <p style="text-align: center; font-size: 1.5em; font-family: 'Cinzel';">
+        <p style="text-align: center; font-size: 1.5em; font-family: 'Cinzel'; font-weight: bold;">
           Select a class to get started!
         </p>
-        <!-- goes to https://wallpapercave.com/w/wp2770237 when clicked -->
         <img src="{{ url_for('static', filename='homepage.jpg') }}" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" onclick="window.open('https://wallpapercave.com/w/wp2770237', '_blank');">
       </div>
       <span class="br" style="--h: 1em;"></span>
@@ -130,7 +129,7 @@
         </div>
         <div class="col-md-1" style="width: 10%; padding-left: 5px;">
           <span class="br" style="--h: 0.4em;"></span>
-          {% block search_description %}{% endblock %}
+          {% block name_only %}{% endblock %}
         </div>
         <div class="col-md-3" style="width: 20%; padding-left: 0px;">
           <span class="br" style="--h: 0.3em;"></span>

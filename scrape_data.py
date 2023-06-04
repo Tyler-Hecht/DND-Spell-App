@@ -94,4 +94,4 @@ def scrape_spell(spell_name):
     for link in content.find_all("a"):
         link.replaceWithChildren()
     
-    return str(content)
+    return str(content), content.text.replace("Source:", "").replace("Casting Time:", "").replace("Range:", "").replace("Components:", "").replace("Duration:", "")

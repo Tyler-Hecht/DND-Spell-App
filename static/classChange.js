@@ -11,9 +11,9 @@ function classChange(select) {
         }
         // change title
         if (selected != "Select Class") {
-            $("#title").html("<h3>" + selected + " Spells</h3>");
+            $("#title").html(selected + " Spells");
         } else {
-            $("#title").html("<h3>DND Spells</h3>");
+            $("#title").html("DND Spells");
         }
 
         var paladin_color = "#efc17c"

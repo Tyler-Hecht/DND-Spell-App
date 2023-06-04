@@ -2,14 +2,16 @@
 
 {% block search %}
 
-<input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus" id="search">
+<!-- use IM Fell DW Pica font -->
+<link href="https://fonts.googleapis.com/css?family=IM+Fell+DW+Pica&display=swap">
+<input type="text" id="query" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus" id="search">
 
 <script>
 function search() {
   // make visible the sidebar
   $("#sidebar").css("display", "block");
   formData = {
-      "query": $("#search").val()
+      "query": $("#query").val()
   }
   // send post request to server with search text
   $.post("/search", formData)
@@ -20,18 +22,24 @@ function search() {
 }
 </script>
 
+<style>
+  #query {
+    font-family: "Special Elite", "IM Fell DW Pica";
+  }
+</style>
+
 {% endblock %}
 
-{% block search_description %}
+{% block name_only %}
 
 <div class="row">
   <div class="col-md-3">
     <span class="br" style="--h: 0.5em;"></span>
-    <input type="checkbox" value="1" id="search-description" name="search-description" onclick="searchDescription()" {% if searchDescription %}checked{% endif %} checked>
+    <input type="checkbox" value="1" id="name-only" name="name-only" onclick="searchDescription()" {% if searchDescription %}checked{% endif %} checked>
   </div>
   <div class="col-md-9" style="padding-left: 2px;">
     <span class="br" style="--h: 0.35em;"></span>
-    <label for="search-description" style="font-size: 0.9em;">
+    <label for="name-only" style="font-size: 0.9em;">
       Name Only
     </label>
   </div>
@@ -43,6 +51,22 @@ function search() {
     transform: scale(1.25);
   }
 </style>
+
+<script>
+  // when checkbox is clicked, update table
+  function searchDescription() {
+    var nameOnly = document.getElementById("name-only").checked;
+    let formData = {
+      "name-only": nameOnly
+    }
+    // send post request to server with checkbox value
+    $.post("/nameOnly", formData)
+    .done(function(data) {
+        // update table
+        $("#table-content").html(data);
+    });
+  }
+</script>
 
 {% endblock %}
 
@@ -67,7 +91,7 @@ function search() {
 
 {% block levels %}
 <link href='https://fonts.googleapis.com/css?family=IM Fell DW Pica' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Special Elite' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Special Elite&text=0123456789' rel='stylesheet'>
 <style>
 
   #checkboxes {
@@ -84,28 +108,34 @@ function search() {
 </style>
 <div id="checkboxes">
   <input type="checkbox" id="level1" name="level1" value="1" onclick="levelSearch()" {% if level1 %}checked{% endif %}>
-  <label for="level1">1</label>st
+  <label for="level1" class="number">1</label>st
   <input type="checkbox" id="level2" name="level2" value="2" onclick="levelSearch()" {% if level2 %}checked{% endif %}>
-  <label for="level2">2</label>nd
+  <label for="level2" class="number">2</label>nd
   <input type="checkbox" id="level3" name="level3" value="3" onclick="levelSearch()" {% if level3 %}checked{% endif %}>
-  <label for="level3">3</label>rd
+  <label for="level3" class="number">3</label>rd
   <input type="checkbox" id="level4" name="level4" value="4" onclick="levelSearch()" {% if level4 %}checked{% endif %}>
-  <label for="level4">4</label>th
+  <label for="level4" class="number">4</label>th
   <input type="checkbox" id="level5" name="level5" value="5" onclick="levelSearch()" {% if level5 %}checked{% endif %}>
-  <label for="level5">5</label>th
+  <label for="level5" class="number">5</label>th
   <div id = "fullCaster">
     <input type="checkbox" id="level6" name="level6" value="6" onclick="levelSearch()" {% if level6 %}checked{% endif %}>
-    <label for="level6">6</label>th
+    <label for="level6" class="number">6</label>th
     <input type="checkbox" id="level7" name="level7" value="7" onclick="levelSearch()" {% if level7 %}checked{% endif %}>
-    <label for="level7">7</label>th
+    <label for="level7" class="number">7</label>th
     <input type="checkbox" id="level8" name="level8" value="8" onclick="levelSearch()" {% if level8 %}checked{% endif %}>
-    <label for="level8">8</label>th
+    <label for="level8" class="number">8</label>th
     <input type="checkbox" id="level9" name="level9" value="9" onclick="levelSearch()" {% if level9 %}checked{% endif %}>
-    <label for="level9">9</label>th
+    <label for="level9" class="number">9</label>th
     <input type="checkbox" id="level0" name="level0" value="0" onclick="levelSearch()" {% if level0 %}checked{% endif %}>
     <label for="level0" class="cantrip">Cantrip</label>
   </div>
 </div>
+
+<style>
+  .number {
+    font-weight: bold;
+  }
+</style>
 
 <script>
   // when a checkbox is clicked, update the table
