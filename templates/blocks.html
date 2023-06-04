@@ -1,5 +1,51 @@
 {% extends "index.html" %}
 
+{% block search %}
+
+<input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus" id="search">
+
+<script>
+function search() {
+  // make visible the sidebar
+  $("#sidebar").css("display", "block");
+  formData = {
+      "query": $("#search").val()
+  }
+  // send post request to server with search text
+  $.post("/search", formData)
+  .done(function(data) {
+      // update table
+      $("#table-content").html(data);
+  });
+}
+</script>
+
+{% endblock %}
+
+{% block search_description %}
+
+<div class="row">
+  <div class="col-md-3">
+    <span class="br" style="--h: 0.5em;"></span>
+    <input type="checkbox" value="1" id="search-description" name="search-description" onclick="searchDescription()" {% if searchDescription %}checked{% endif %} checked>
+  </div>
+  <div class="col-md-9" style="padding-left: 2px;">
+    <span class="br" style="--h: 0.35em;"></span>
+    <label for="search-description" style="font-size: 0.9em;">
+      Name Only
+    </label>
+  </div>
+</div>
+
+<!-- make checkbox bigger -->
+<style>
+  #search-description {
+    transform: scale(1.25);
+  }
+</style>
+
+{% endblock %}
+
 {% block class %}
 
 <select id="class-select" class="form-select" aria-label="Default select example" onchange="classChange(this)" style="float: right; background-color: rgba(255, 255, 255, 0.5); border-color: rgb(100, 100, 100);">

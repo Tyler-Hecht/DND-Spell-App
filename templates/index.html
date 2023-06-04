@@ -124,14 +124,19 @@
 
       <!-- filter options -->
       <div class="row" id="filters" hidden>
-        <div class="col-md-3" style="width: 35%">
-          <span class="br" style="--h: 0.3em;"></span>
-          <input type="text" name="query" value="{{ query }}" class="form-control" onkeyup="search()" placeholder="Search for a spell..." autofocus="autofocus" id="search">
+        <div class="col-md-3" style="width: 33.5%; padding-left: 15px; padding-right: 0px;">
+          <span class="br" style="--h: 0.6em;"></span>
+          {% block search %}{% endblock %}
         </div>
-        <div class="col-md-3" style="width: 22%">
+        <div class="col-md-1" style="width: 10%; padding-left: 5px;">
+          <span class="br" style="--h: 0.4em;"></span>
+          {% block search_description %}{% endblock %}
+        </div>
+        <div class="col-md-3" style="width: 21%; padding-left: 0px;">
+          <span class="br" style="--h: 0.3em;"></span>
           {% block levels %}{% endblock %}
         </div>
-        <div class="col-md-2" style="width: 11.5%">
+        <div class="col-md-2" style="width: 11.5%; padding-left: 2px;">
           {% block school %}{% endblock %}
           <span class="br" style="--h: 0.25em;"></span>
           {% block castingTime %}{% endblock %}
@@ -145,9 +150,6 @@
           {% block range %}{% endblock %}
           <span class="br" style="--h: 0.25em;"></span>
           {% block components %}{% endblock %}
-        </div>
-        <div class="col-md-1" style="width: 7.5%">  
-          <!-- for later -->
         </div>
       </div>
       <span class="br" style="--h: 0.5em;"></span>
