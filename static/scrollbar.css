@@ -1,11 +1,12 @@
 .scrollit {
-    overflow:scroll;
+    overflow:  scroll;
     height:435px;
-    overflow-x:auto;
+    overflow-x: auto;
     border: 3px solid rgba(0, 0, 0, 0.25);
     border-right: 0px;
     background-image: url('parchment-trans-gray.png');
     background-repeat: repeat;
+    background-color: #f5dab1;
   }
 
 .scrollit::-webkit-scrollbar {

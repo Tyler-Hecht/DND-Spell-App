@@ -1,6 +1,5 @@
 <div class="frame">
   <div class="scrollit">
-    
     <style>
       .table {
         font-size: 0.9em;
@@ -18,7 +17,7 @@
           <col style="width: 17.5%">
           <col style="width: 16%">
       </colgroup>
-      <thead>
+      <thead style="background-color: rgba(255,255,255,0.64);">
           <th>Level</th>
           <th>Name</th>
           <th>School</th>
@@ -51,9 +50,6 @@
         border-left: 22px solid transparent;
         border-image: url("{{ url_for('static', filename='frame.png') }}") round;
         border-image-slice: 13 13 13 13;
-  }
-  thead {
-    background-color: {{ header_color }}; /* this gives an error in VSC but it doesn't know anything */
   }
 </style>
   

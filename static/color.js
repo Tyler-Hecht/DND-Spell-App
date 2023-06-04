@@ -37,7 +37,7 @@ function darkify(color_string) {
 // 7 = light cyan
 // 8 = light gray
 // 9 = light white
-var colors = ["#f8f9fa", "#d4edda", "#fff3cd", "#ffe0c0", "#f8d7da", "#d1c4e9", "#cff4fc", "#94ffea", "#b6b8bb", "#ffb6c1"];
+var colors = ["#d8d9da", "#d4edda", "#fff3cd", "#ffe0c0", "#f8d7da", "#d1c4e9", "#cff4fc", "#94ffea", "#a6a8ab", "#ffb6c1"];
 var rows = document.getElementsByTagName("tr");
 // when cursor hovers over a row, change its color to the corresponding color in colorsDarker
 // when cursor leaves a row, change its color back to the corresponding color in colors

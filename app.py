@@ -17,11 +17,6 @@ config = {
 	"concentration": None,
 	"components": None
 }
-class_color = {
-    "Paladin": "#f5dab1",
-    "Sorcerer": "#b1d9f5",
-    "Bard": "#d9b1f5"
-}
 
 def lighten(hex_color):
 	hex_color = hex_color.lstrip('#')
@@ -34,8 +29,7 @@ def updateTable(config, spell_list_cache):
 		spells = spell_list_cache[config["class"]]
 		spells = filter_spells(config, spells)
 		spells_data = [spell_to_dict(spell) for spell in spells]
-		return render_template('spell_table.html', spells=spells_data, show=config["show"],
-			 header_color = lighten(class_color[config["class"]]))
+		return render_template('spell_table.html', spells=spells_data, show=config["show"])
 	else:
 		return render_template('spell_table.html', spells=[], show=0, header_color = "#ffffff")
 
