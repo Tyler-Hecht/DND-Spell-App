@@ -1,3 +1,5 @@
+# this file is not needed if the scraped data is already saved in a file
+
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import pandas as pd

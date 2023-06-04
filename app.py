@@ -3,6 +3,9 @@ from spell import spellize, spell_to_dict, filter_spells
 from scrape_data import scrape_class
 import pickle
 
+'''
+Uncomment this section to scrape new data (bs4, urllib, and pandas required)
+'''
 # scraped_data = {
 #     "Paladin": {},
 #     "Sorcerer": {},
@@ -19,6 +22,10 @@ import pickle
 # load scraped data from file
 with open('scraped_data.pkl', 'rb') as f:
 	scraped_data = pickle.load(f)
+print("Starting app")
+print("Spell data loaded")
+print("Connect to http://localhost:20 or an address listed below")
+print()
 
 config = {
 	"query": None,
