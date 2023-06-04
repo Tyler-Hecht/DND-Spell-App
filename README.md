@@ -12,7 +12,7 @@ More features will be added soon
 1. Install [Python](https://www.python.org/downloads/) with [pip](https://pip.pypa.io/en/stable/installation/)
 2. Install Flask with `pip install flask`
 3. Start the app by running the .bat file or entering `flask run` in the terminal
-4. In a browser, go to `localhost:20`
+4. In a browser, go to `localhost:2000`
 
 This app runs locally but can also be joined by others from the address shown in the terminal\
 The steps described above are meant for Windows, but similar steps can be followed for Mac
