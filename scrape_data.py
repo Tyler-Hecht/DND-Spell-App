@@ -71,6 +71,7 @@ def scrape_class(class_name):
     return df
 
 def scrape_spell(spell_name):
+    print(spell_name)
     spell_name2 = spell_name
     if spell_name == "Icingdeath's Frost (UA)": # special case
         spell_name2 = spell_name.lower().replace("'", "-")

@@ -30,9 +30,9 @@ def spell_to_dict(spell):
         "description": spell.description
     }
 
-def filter_spells(config, spell_list):
+def filter_spells(config, spell_dict):
     spells = []
-    for spell in spell_list:
+    for spell in spell_dict.values():
         if config["query"] is not None:
             if config["name only"]:
                 if config["query"].lower() not in spell.name.lower():
