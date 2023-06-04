@@ -7,6 +7,7 @@ spell_cache = {}
 spell_list_cache = {}
 config = {
 	"query": None,
+	"name only": True,
 	"class": None,
 	"show": 0,
 	"levels": [],
@@ -39,6 +40,7 @@ app = Flask(__name__)
 def index():
 	# reset config
 	config["query"] = None
+	config["name only"] = True
 	config["class"] = None
 	config["show"] = 0
 	config["levels"] = []

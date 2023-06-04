@@ -71,10 +71,13 @@ def scrape_class(class_name):
     return df
 
 def scrape_spell(spell_name):
-    # make sure spell name is lowercase and has no spaces
-    spell_name2 = spell_name.lower().replace(" ", "-").replace("'", "").replace(":", "").replace("-(ua)", "").replace("-(hb)", "")
+    spell_name2 = spell_name
+    if spell_name == "Icingdeath's Frost (UA)": # special case
+        spell_name2 = spell_name.lower().replace("'", "-")
+    spell_name2 = spell_name2.lower().replace(" ", "-").replace("'", "").replace(":", "").replace("-(ua)", "").replace("-(hb)", "").replace("/", "-")
+    if spell_name2 in ["antagonize", "house-of-cards", "guiding-hand"]: # special cases
+        spell_name2 += "-ua"
     url = f"http://dnd5e.wikidot.com/spell:{spell_name2}"
-    
     page = urlopen(url)
     html = page.read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")
@@ -88,5 +91,4 @@ def scrape_spell(spell_name):
     for link in content.find_all("a"):
         link.replaceWithChildren()
     
-
     return str(content)

@@ -14,6 +14,6 @@ More features will be added soon
 3. Start the app by running the .bat file or entering `flask --app app run --port=5000 --host=0.0.0.0` in the terminal
 4. In a browser, go to `localhost:5000`
 
-This app runs locally but can also be joined by others from the address shown in the terminal
+This app runs locally but can also be joined by others from the address shown in the terminal\
 The steps described above are meant for Windows, but similar steps can be followed for Mac
 

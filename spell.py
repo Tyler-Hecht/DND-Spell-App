@@ -1,5 +1,7 @@
+from scrape_data import scrape_spell
+
 class Spell:
-    def __init__(self, level, name, school, casting_time, range, duration, components):
+    def __init__(self, level, name, school, casting_time, range, duration, components, description):
         self.level = level
         self.name = name
         self.school = school
@@ -7,11 +9,12 @@ class Spell:
         self.range = range
         self.duration = duration
         self.components = components
+        self.description = description
 
 def spellize(df):
     spells = []
     for row in df.itertuples():
-        spell = Spell(row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+        spell = Spell(row[1], row[2], row[3], row[4], row[5], row[6], row[7], scrape_spell(row[2]))
         spells.append(spell)
     return spells
 
@@ -23,15 +26,22 @@ def spell_to_dict(spell):
         "casting_time": spell.casting_time,
         "range": spell.range,
         "duration": spell.duration,
-        "components": spell.components
+        "components": spell.components,
+        "description": spell.description
     }
 
 def filter_spells(config, spell_list):
     spells = []
     for spell in spell_list:
         if config["query"] is not None:
-            if config["query"].lower() not in spell.name.lower():
-                continue
+            if config["name only"]:
+                if config["query"].lower() not in spell.name.lower():
+                    continue
+            else:
+                description = spell.description.text.replace("Source:", "").replace("Casting Time:", "").replace("Range:", "").replace("Components:", "").replace("Duration:", "")
+                full_details = spell.name + spell.level + spell.school + spell.casting_time + spell.range + spell.duration + spell.components + description
+                if config["query"].lower() not in full_details.lower():
+                    continue
         if config["levels"] != []:
             if int(spell.level) not in config["levels"]:
                 continue
