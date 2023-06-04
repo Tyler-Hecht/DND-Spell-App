@@ -16,7 +16,7 @@ function classChange(select) {
             $("#title").html("<h3>DND Spells</h3>");
         }
 
-        var paladin_color = "#f5dab1"
+        var paladin_color = "#efc17c"
         var sorcerer_color = "#b1d9f5"
         var bard_color = "#d9b1f5"
 
