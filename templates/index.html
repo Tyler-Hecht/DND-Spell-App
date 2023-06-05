@@ -93,6 +93,25 @@
         overflow-y: scroll;
       }
 
+      #filters {
+        width: 100%;
+        /* center on page */
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 4px;
+        padding-bottom: 6px;
+        background-color: #f5dab1;
+        background-image: url("{{ url_for('static', filename='parchment-trans-gray.png') }}");
+        background-repeat: repeat;
+        border: 15px solid transparent;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-image: url("{{ url_for('static', filename='frame.png') }}") round;
+        border-image-slice: 10 10 10 10;
+        border-image-repeat: round;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -103,7 +122,7 @@
   <body style="background-color: #f9f7ed;" id="body">
     <div class="container">
       <!-- title -->
-      <span class="br" style="--h: 0.8em;"></span>
+      <span class="br" style="--h: 0.6em;"></span>
       <div class="row">
         <div class="col-md-10" style="font-family: 'Cinzel', serif;">
           <h3 id = "title" style="font-weight: bold;">DND Spells</h3>
@@ -113,17 +132,16 @@
         </div>
       </div>
       <div id="default-text">
-        <span class="br" style="--h: 2em;"></span> 
+        <span class="br" style="--h: 1.6em;"></span> 
         <p style="text-align: center; font-size: 1.5em; font-family: 'Cinzel'; font-weight: bold;">
           Select a class to get started!
         </p>
         <img src="{{ url_for('static', filename='homepage.jpg') }}" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" onclick="window.open('https://wallpapercave.com/w/wp2770237', '_blank');">
       </div>
-      <span class="br" style="--h: 1em;"></span>
 
       <!-- filter options -->
       <div class="row" id="filters" hidden>
-        <div class="col-md-3" style="width: 37%; padding-left: 15px; padding-right: 0px;">
+        <div class="col-md-3" style="width: 36%; padding-left: 10px; padding-right: 0px;">
           <span class="br" style="--h: 0.6em;"></span>
           {% block search %}{% endblock %}
         </div>
@@ -131,7 +149,7 @@
           <span class="br" style="--h: 0.4em;"></span>
           {% block name_only %}{% endblock %}
         </div>
-        <div class="col-md-3" style="width: 20%; padding-left: 0px;">
+        <div class="col-md-3" style="width: 21%; padding-left: 0px;">
           <span class="br" style="--h: 0.3em;"></span>
           {% block levels %}{% endblock %}
         </div>
@@ -151,15 +169,14 @@
           {% block components %}{% endblock %}
         </div>
       </div>
-      <span class="br" style="--h: 0.5em;"></span>
 
       <!-- table and sidebar -->
       <!-- decrease space between columns -->
       <div class="row g-2">
-        <div class="col-md-7" id="table-content" hidden style="padding-top: 3px;">
+        <div class="col-md-7" id="table-content" hidden style="padding-top: 3px; padding-right: 0px;">
           <!-- table -->
         </div>
-        <div class="col-md-5" style="padding-top: 2px; padding-bottom: 5px;">
+        <div class="col-md-5" style="padding-top: 2px; padding-bottom: 5px; padding-left: 0px;">
           <div id="sidebar" hidden>
           <div id="outline" class="scrollit">
           <!-- shift button down 10 pixels -->
