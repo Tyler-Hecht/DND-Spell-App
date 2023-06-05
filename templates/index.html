@@ -95,35 +95,44 @@
 
       #filters {
         width: 100%;
-        /* center on page */
         margin-left: auto;
         margin-right: auto;
-        padding-top: 4px;
-        padding-bottom: 6px;
         background-color: #f5dab1;
         background-image: url("{{ url_for('static', filename='parchment-trans-gray.png') }}");
         background-repeat: repeat;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         border: 15px solid transparent;
         border-top: 12px solid transparent;
         border-bottom: 12px solid transparent;
         border-image: url("{{ url_for('static', filename='frame.png') }}") round;
         border-image-slice: 10 10 10 10;
         border-image-repeat: round;
-        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
+      #filters-border {
+        border: 3px solid rgba(0, 0, 0, 0.25);
+        margin-left: auto;
+        margin-right: auto;
+        margin: 0px;
+        height: 100%;
+      }
+
+      select {
+        background-color: rgba(245, 218, 177, 0.4);
       }
 
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- include scrollbar.css file -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='scrollbar.css') }}"></link>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='scrollit.css') }}"></link>
   </head>
 
   <body style="background-color: #f9f7ed;" id="body">
     <div class="container">
       <!-- title -->
       <span class="br" style="--h: 0.6em;"></span>
-      <div class="row">
+      <div class="row" style="margin-left: -8px; margin-right: -8px;">
         <div class="col-md-10" style="font-family: 'Cinzel', serif;">
           <h3 id = "title" style="font-weight: bold;">DND Spells</h3>
         </div>
@@ -132,7 +141,7 @@
         </div>
       </div>
       <div id="default-text">
-        <span class="br" style="--h: 1.6em;"></span> 
+        <span class="br" style="--h: 2em;"></span> 
         <p style="text-align: center; font-size: 1.5em; font-family: 'Cinzel'; font-weight: bold;">
           Select a class to get started!
         </p>
@@ -140,7 +149,9 @@
       </div>
 
       <!-- filter options -->
-      <div class="row" id="filters" hidden>
+      <div id="filters" hidden>
+      <div class="row" id="filters-border">
+        <span class="br" style="--h: 0.25em;"></span>
         <div class="col-md-3" style="width: 36%; padding-left: 10px; padding-right: 0px;">
           <span class="br" style="--h: 0.6em;"></span>
           {% block search %}{% endblock %}
@@ -150,7 +161,7 @@
           {% block name_only %}{% endblock %}
         </div>
         <div class="col-md-3" style="width: 21%; padding-left: 0px;">
-          <span class="br" style="--h: 0.3em;"></span>
+          <span class="br" style="--h: 0.4em;"></span>
           {% block levels %}{% endblock %}
         </div>
         <div class="col-md-2" style="width: 11%; padding-left: 0px;">
@@ -168,10 +179,11 @@
           <span class="br" style="--h: 0.25em;"></span>
           {% block components %}{% endblock %}
         </div>
+        <span class="br" style="--h: 0.425em;"></span>
+      </div>  
       </div>
 
       <!-- table and sidebar -->
-      <!-- decrease space between columns -->
       <div class="row g-2">
         <div class="col-md-7" id="table-content" hidden style="padding-top: 3px; padding-right: 0px;">
           <!-- table -->

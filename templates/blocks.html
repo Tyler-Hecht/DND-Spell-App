@@ -1,5 +1,33 @@
 {% extends "index.html" %}
 
+{% block class %}
+
+<select id="class-select" class="form-select" aria-label="Default select example" onchange="classChange(this)">
+  <option selected>
+    Select Class
+  </option>
+  <option value="Paladin">
+    Paladin
+  </option>
+  <option value="Sorcerer">
+    Sorcerer
+  </option>
+  <option value="Bard">
+    Bard
+  </option>
+</select>
+
+<style>
+  #class-select {
+    float: right;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: rgb(100, 100, 100);
+    height: 35px;
+  }
+</style>
+
+{% endblock %}
+
 {% block search %}
 
 <!-- use IM Fell DW Pica font -->
@@ -70,25 +98,6 @@ function search() {
 
 {% endblock %}
 
-{% block class %}
-
-<select id="class-select" class="form-select" aria-label="Default select example" onchange="classChange(this)" style="float: right; background-color: rgba(255, 255, 255, 0.5); border-color: rgb(100, 100, 100);">
-  <option selected>
-    Select Class
-  </option>
-  <option value="Paladin">
-    Paladin
-  </option>
-  <option value="Sorcerer">
-    Sorcerer
-  </option>
-  <option value="Bard">
-    Bard
-  </option>
-</select>
-
-{% endblock %}
-
 {% block levels %}
 <link href='https://fonts.googleapis.com/css?family=IM Fell DW Pica' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Special Elite&text=0123456789' rel='stylesheet'>
@@ -96,6 +105,7 @@ function search() {
 
   #checkboxes {
     font-family: 'IM Fell DW Pica', serif;
+    font-size: 0.95em;
   }
 
   label {
