@@ -5,7 +5,7 @@ The spells can be searched by name and filtered by level, casting time, etc.\
 Clicking on a spell shows its description
 
 Currently, three classes and no subclasses are supported\
-More features will be added soon
+More features are being added
 
 ## Running
 
@@ -14,6 +14,5 @@ More features will be added soon
 3. Start the app by running the .bat file or entering `flask run` in the terminal
 4. In a browser, go to `localhost:2000`
 
-This app runs locally but can also be joined by others from the address shown in the terminal\
-The steps described above are meant for Windows, but similar steps can be followed for Mac
-
+Uncomment the line in the .env file to join with devices on the same network
+The steps described above are meant for Windows, but similar steps can be followed for Mac\
