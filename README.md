@@ -14,5 +14,5 @@ More features are being added
 3. Start the app by running the .bat file or entering `flask run` in the terminal
 4. In a browser, go to `localhost:2000`
 
-Uncomment the line in the .env file to join with devices on the same network
+Uncomment the line in the .env file to join with devices on the same network\
 The steps described above are meant for Windows, but similar steps can be followed for Mac
