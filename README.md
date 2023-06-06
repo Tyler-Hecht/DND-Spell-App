@@ -15,4 +15,4 @@ More features are being added
 4. In a browser, go to `localhost:2000`
 
 Uncomment the line in the .env file to join with devices on the same network
-The steps described above are meant for Windows, but similar steps can be followed for Mac\
+The steps described above are meant for Windows, but similar steps can be followed for Mac
