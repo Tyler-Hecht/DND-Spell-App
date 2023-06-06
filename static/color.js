@@ -48,7 +48,6 @@ for (var i = 1; i < rows.length; i++) {
     rows[i].style.backgroundColor = colors[rows[i].cells[0].innerHTML] + opacityHex;
     // hover
     rows[i].addEventListener("mouseover", function() {
-        console.log(this.cells[0].innerHTML);
         this.style.backgroundColor = darkify(colors[this.cells[0].innerHTML]) + opacityHex;
     });
     rows[i].addEventListener("mouseout", function() {
