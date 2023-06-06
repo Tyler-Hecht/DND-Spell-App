@@ -27,7 +27,7 @@ function darkify(color_string) {
     hex = "#" + r.toString(16) + g.toString(16) + b.toString(16);
     return hex;
 }
-// 0 = light pink
+// 0 = light gray
 // 1 = light green
 // 2 = light yellow
 // 3 = light orange
@@ -35,7 +35,7 @@ function darkify(color_string) {
 // 5 = light purple
 // 6 = light blue
 // 7 = light cyan
-// 8 = light gray
+// 8 = gray
 // 9 = light white
 var colors = ["#d8d9da", "#d4edda", "#fff3cd", "#ffe0c0", "#f8d7da", "#d1c4e9", "#cff4fc", "#94ffea", "#a6a8ab", "#ffb6c1"];
 var rows = document.getElementsByTagName("tr");
@@ -43,11 +43,12 @@ var rows = document.getElementsByTagName("tr");
 // when cursor leaves a row, change its color back to the corresponding color in colors
 // if header row is hovered over, do nothing
 opacityHex = "a4";
-for (var i = 0; i < rows.length; i++) {
+for (var i = 1; i < rows.length; i++) {
     // default
     rows[i].style.backgroundColor = colors[rows[i].cells[0].innerHTML] + opacityHex;
     // hover
     rows[i].addEventListener("mouseover", function() {
+        console.log(this.cells[0].innerHTML);
         this.style.backgroundColor = darkify(colors[this.cells[0].innerHTML]) + opacityHex;
     });
     rows[i].addEventListener("mouseout", function() {

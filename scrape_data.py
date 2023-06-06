@@ -93,5 +93,9 @@ def scrape_spell(spell_name):
     # make all hyperlinks into normal text (no longer clickable)
     for link in content.find_all("a"):
         link.replaceWithChildren()
+
+    # decrease bottom margin of first two <p> tags
+    content.find_all("p")[0]["style"] = "margin-bottom: 8px;"
+    content.find_all("p")[1]["style"] = "margin-bottom: 8px;"
     
     return str(content), content.text.replace("Source:", "").replace("Casting Time:", "").replace("Range:", "").replace("Components:", "").replace("Duration:", "")

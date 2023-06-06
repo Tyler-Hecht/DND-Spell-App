@@ -118,9 +118,12 @@
       }
 
       select {
-        background-color: rgba(245, 218, 177, 0.4);
+        background-color: rgba(245, 218, 177, 0.45);
       }
 
+      input[type="checkbox"] {
+        filter: hue-rotate(190deg) brightness(1.5) saturate(1.2) contrast(0.8);
+      }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -193,19 +196,13 @@
           <div id="outline" class="scrollit">
           <!-- shift button down 10 pixels -->
           <button type="button" aria-label="Close" id="close-sidebar" hidden></button>
-            <h3 id="spell-title" style="padding-left: 15px; padding-right: 5px; padding-top: 10px;" hidden></h3>
+            <h3 id="spell-title" style="padding-left: 13px; padding-right: 5px; padding-top: 10px; font-size: 1.7em" hidden></h3>
             <!-- center  -->
             <p id="sidebar-default-text" hidden style="font-family: Cinzel; text-align: center; font-size: 1.4em;">
-              <br>
-              <br>
-              <br>
+              <span class="br" style="--h: 6.3em;"></span>
               Click on a spell to see more information
-              <br>
-              <br>
-              <br>
-              <br>
             </p>
-            <p id="sidebar-text" hidden style="font-size: 1em"></p>
+            <p id="sidebar-text" hidden style="font-size: 0.95em; padding-top: 2px"></p>
           </div>
           </div>
         </div>
