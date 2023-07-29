@@ -19,6 +19,7 @@ function classChange(select) {
         var paladin_color = "#efc17c"
         var sorcerer_color = "#b1d9f5"
         var bard_color = "#d9b1f5"
+        var wizard_color = "#c44f74"
 
         // hide sidebar when class is changed
         $("#close-sidebar").attr("hidden", true);
@@ -50,6 +51,9 @@ function classChange(select) {
             } else if (selected == "Bard") {
                 $("#fullCaster").removeAttr("hidden");
                 $("body").css("background-color", bard_color);
+            } else if (selected == "Wizard") {
+                $("#fullCaster").removeAttr("hidden");
+                $("body").css("background-color", wizard_color);
             }
         }
     });

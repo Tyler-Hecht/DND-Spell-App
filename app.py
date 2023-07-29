@@ -9,7 +9,8 @@ Uncomment this section to scrape new data (bs4, urllib, and pandas required)
 # scraped_data = {
 #     "Paladin": {},
 #     "Sorcerer": {},
-#     "Bard": {}
+#     "Bard": {},
+#     "Wizard": {}
 # }
 # for class_name in scraped_data:
 # 	spell_list = spellize(scrape_class(class_name))
@@ -23,7 +24,7 @@ with open('scraped_data.pkl', 'rb') as f:
 	scraped_data = pickle.load(f)
 print("Starting app")
 print("Spell data loaded")
-print("Connect to http://localhost:20 or an address listed below")
+print("Connect to http://localhost:2000 or an address listed below")
 print()
 
 config = {
@@ -157,3 +158,5 @@ def concentrationSearch():
 	else:
 		config["concentration"] = None
 	return updateTable(config, scraped_data)
+
+app.run(port = 2000)

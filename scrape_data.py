@@ -46,6 +46,10 @@ def scrape_class(class_name):
                     info[property] = "Self (15-foot cone)"
                 else: # normal case
                     info[property] = data.text
+                
+                if property == "Spell Name":
+                    # get the url of the spell
+                    info["url"] = "http://dnd5e.wikidot.com" + data.find("a")["href"]
 
             # if name is Melf's Minute Meteors, casting time is 1 Action and range is Self
             if name == "Melf's Minute Meteors":
@@ -72,15 +76,8 @@ def scrape_class(class_name):
     df = df[cols]
     return df
 
-def scrape_spell(spell_name):
+def scrape_spell(spell_name, url):
     print(spell_name)
-    spell_name2 = spell_name
-    if spell_name == "Icingdeath's Frost (UA)": # special case
-        spell_name2 = spell_name.lower().replace("'", "-")
-    spell_name2 = spell_name2.lower().replace(" ", "-").replace("'", "").replace(":", "").replace("-(ua)", "").replace("-(hb)", "").replace("/", "-")
-    if spell_name2 in ["antagonize", "house-of-cards", "guiding-hand"]: # special cases
-        spell_name2 += "-ua"
-    url = f"http://dnd5e.wikidot.com/spell:{spell_name2}"
     page = urlopen(url)
     html = page.read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")

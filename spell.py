@@ -13,9 +13,7 @@ class Spell:
 
 def spellize(df):
     spells = []
-    for row in df.itertuples():
-        spell = Spell(row[1], row[2], row[3], row[4], row[5], row[6], row[7], scrape_spell(row[2]))
-        spells.append(spell)
+    df.apply(lambda row: spells.append(Spell(row["Level"], row["Spell Name"], row["School"], row["Casting Time"], row["Range"], row["Duration"], row["Components"], scrape_spell(row["Spell Name"], row["url"]))), axis=1)
     return spells
 
 def spell_to_dict(spell):
@@ -31,6 +29,12 @@ def spell_to_dict(spell):
     }
 
 def filter_spells(config, spell_dict):
+    if config["class"] in ["Paladin", "Ranger"]:
+        # remove 0, 6, 7, 8, 9 (these are not paladin/ranger spell levels)
+        tmp_levels = [level for level in config["levels"] if level not in [0, 6, 7, 8, 9]]
+    else:
+        tmp_levels = config["levels"]
+        
     spells = []
     for spell in spell_dict.values():
         if config["query"] is not None:
@@ -40,8 +44,8 @@ def filter_spells(config, spell_dict):
             else:
                 if config["query"].lower() not in spell.name.lower() and config["query"].lower() not in spell.description[1].lower():
                     continue
-        if config["levels"] != []:
-            if int(spell.level) not in config["levels"]:
+        if tmp_levels != []:
+            if int(spell.level) not in tmp_levels:
                 continue
         if config["school"] is not None:
             if config["school"].lower() != spell.school.lower():
