@@ -4,6 +4,21 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import pandas as pd
 
+def get_source(description):
+    soup = BeautifulSoup(description, "html.parser")
+    source = soup.find("p", text=lambda x: x and "Source:" in x).text.lower()
+    if "player's handbook" in source:
+        return "phb"
+    elif "xanathar's guide to everything" in source:
+        return "xge"
+    elif "tasha's cauldron of everything" in source:
+        return "tce"
+    elif "unearthed arcana" in source:
+        return "ua"
+    else:
+        return "other"
+
+
 def scrape_class(class_name):
     url = f"http://dnd5e.wikidot.com/spells:{class_name}"
     properties = ["Spell Name", "School", "Casting Time", "Range", "Duration", "Components"]

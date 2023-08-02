@@ -1,4 +1,4 @@
-from scrape_data import scrape_spell
+from scrape_data import scrape_spell, get_source
 
 class Spell:
     def __init__(self, level, name, school, casting_time, range, duration, components, description):
@@ -10,6 +10,7 @@ class Spell:
         self.duration = str(duration)
         self.components = str(components)
         self.description = (str(description[0]), str(description[1]))
+        self.source = get_source(self.description[0])
 
 def spellize(df):
     spells = []
@@ -107,6 +108,9 @@ def filter_spells(config, spell_dict):
                     continue
             elif "Concentration" in spell.duration:
                 continue
+        if not config["source"][spell.source]:
+            continue
 
         spells.append(spell)
+        
     return spells

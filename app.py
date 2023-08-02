@@ -3,21 +3,21 @@ from spell import spellize, spell_to_dict, filter_spells
 from scrape_data import scrape_class
 import pickle
 
-'''
-Uncomment this section to scrape new data (bs4, urllib, and pandas required)
-'''
-# scraped_data = {
-#     "Paladin": {},
-#     "Sorcerer": {},
-#     "Bard": {},
-#     "Wizard": {}
-# }
-# for class_name in scraped_data:
-# 	spell_list = spellize(scrape_class(class_name))
-# 	for spell in spell_list:
-# 		scraped_data[class_name][spell.name] = spell
-# with open('scraped_data.pkl', 'wb') as f:
-# 	pickle.dump(scraped_data, f)
+def scrape_new_data():
+	scraped_data = {
+		"Paladin": {},
+		"Sorcerer": {},
+		"Bard": {},
+		"Wizard": {}
+	}
+	for class_name in scraped_data:
+		spell_list = spellize(scrape_class(class_name))
+		for spell in spell_list:
+			scraped_data[class_name][spell.name] = spell
+	with open('scraped_data.pkl', 'wb') as f:
+		pickle.dump(scraped_data, f)
+# Uncomment this to scrape new data (bs4, urllib, and pandas required)
+# scrape_new_data()
 
 # load scraped data from file
 with open('scraped_data.pkl', 'rb') as f:
@@ -27,19 +27,28 @@ print("Spell data loaded")
 print("Connect to http://localhost:2000 or an address listed below")
 print()
 
-config = {
-	"query": None,
-	"name only": True,
-	"class": None,
-	"show": 0,
-	"levels": [],
-	"school": None,
-	"casting_time": None,
-	"range": None,
-	"duration": None,
-	"concentration": None,
-	"components": None
-}
+def reset_config(config):
+	config["query"] = None
+	config["name only"] = True
+	config["class"] = None
+	config["show"] = 0
+	config["levels"] = []
+	config["school"] = None
+	config["casting_time"] = None
+	config["range"] = None
+	config["duration"] = None
+	config["concentration"] = None
+	config["components"] = None
+	config["source"] = {
+		"phb": True,
+		"xge": True,
+		"tce": False,
+		"ua": False,
+		"other": False
+	}
+
+config = {}
+reset_config(config)
 
 def lighten(hex_color):
 	hex_color = hex_color.lstrip('#')
@@ -60,18 +69,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	# reset config
-	config["query"] = None
-	config["name only"] = True
-	config["class"] = None
-	config["show"] = 0
-	config["levels"] = []
-	config["school"] = None
-	config["casting_time"] = None
-	config["range"] = None
-	config["duration"] = None
-	config["concentration"] = None
-	config["components"] = None
+	reset_config(config)
 	return render_template("blocks.html")
 
 @app.route('/spell/<spell_name>', methods=['GET'])
@@ -159,4 +157,13 @@ def concentrationSearch():
 		config["concentration"] = None
 	return updateTable(config, scraped_data)
 
-app.run(port = 2000)
+@app.route('/sourceSearch', methods=['POST'])
+def sourceSearch():
+	sources = request.form
+	for source in sources:
+		config["source"][source] = sources[source] == "true"
+	print(config["source"])
+	return updateTable(config, scraped_data)
+
+if __name__ == '__main__':
+	app.run(port = 2000)
