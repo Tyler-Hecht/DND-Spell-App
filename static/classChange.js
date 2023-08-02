@@ -55,6 +55,13 @@ function classChange(select) {
                 $("#fullCaster").removeAttr("hidden");
                 $("body").css("background-color", wizard_color);
             }
+            
+            // add "example" option to #subclass-select select element
+            select = document.getElementById("subclass-select");
+            var option = document.createElement("option");
+            option.text = "Example";
+            option.value = "Example";
+            select.add(option);
         }
     });
 }

@@ -136,12 +136,22 @@
       <!-- title -->
       <span class="br" style="--h: 0.6em;"></span>
       <div class="row" style="margin-left: -8px; margin-right: -8px;">
-        <div class="col-md-10" style="font-family: 'Cinzel', serif;">
+        <div class="col-md-8" style="font-family: 'Cinzel', serif;">
           <h3 id = "title" style="font-weight: bold;">DND Spells</h3>
         </div>
-        <div class="col-md-2">
-          {% block class %}{% endblock %}
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;"></div>
+            <div class="col-md-5" style="padding-left: 0px; padding-right: 10px;">
+              {% block class %}{% endblock %}
+            </div>
+            <div class="col-md-5" style="padding-left: 0px; padding-right: 12px;">
+              {% block subclass %}{% endblock %}
+            </div>
+          </div>
         </div>
+        
+
       </div>
       <div id="default-text">
         <span class="br" style="--h: 2em;"></span> 
@@ -177,7 +187,7 @@
             <label for="tce" class="setting">Include Tasha's Cauldron of Everything</label>
             <br>
             <input type="checkbox" id="ua" name="ua" class="setting" onclick="sourceSearch()">
-            <label for="ua" class="setting">Include UA</label>
+            <label for="ua" class="setting">Include Unearthed Arcana</label>
             <br>
             <input type="checkbox" id="other" name="other" class="setting" onclick="sourceSearch()">
             <label for="other" class="setting">Include Other Sources</label>
