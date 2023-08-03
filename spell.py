@@ -1,21 +1,17 @@
-from scrape_data import scrape_spell, get_source
+from bs4 import BeautifulSoup
+import re
 
 class Spell:
-    def __init__(self, level, name, school, casting_time, range, duration, components, description):
-        self.level = str(level)
-        self.name = str(name)
-        self.school = str(school)
-        self.casting_time = str(casting_time)
-        self.range = str(range)
-        self.duration = str(duration)
-        self.components = str(components)
-        self.description = (str(description[0]), str(description[1]))
-        self.source = get_source(self.description[0])
-
-def spellize(df):
-    spells = []
-    df.apply(lambda row: spells.append(Spell(row["Level"], row["Spell Name"], row["School"], row["Casting Time"], row["Range"], row["Duration"], row["Components"], scrape_spell(row["Spell Name"], row["url"]))), axis=1)
-    return spells
+    def __init__(self, name, description):
+        self.description = (str(description), str(description).replace("Source:", "").replace("Casting Time:", "").replace("Range:", "").replace("Components:", "").replace("Duration:", ""))
+        self.level = scrape_property(description, "Level")
+        self.name = name
+        self.school = scrape_property(description, "School")
+        self.casting_time = scrape_property(description, "Casting Time")
+        self.range = scrape_property(description, "Range")
+        self.duration = scrape_property(description, "Duration")
+        self.components = scrape_property(description, "Components")
+        self.source = scrape_property(description, "Source")
 
 def spell_to_dict(spell):
     return {
@@ -67,7 +63,7 @@ def filter_spells(config, spell_dict):
             else:
                 if config["range"] in ["Self", "Touch", "Self (aoe)"]:
                     continue
-                feet = int(spell.range.split(" ")[0])
+                feet = int(spell.range.split(" ")[0].split("-")[0].replace(",", ""))
                 if "mile" in spell.range:
                     feet *= 5280
                 if feet < int(config["range"]):
@@ -112,5 +108,60 @@ def filter_spells(config, spell_dict):
             continue
 
         spells.append(spell)
-        
+
     return spells
+
+def scrape_property(description, property):
+    soup = BeautifulSoup(description, "html.parser")
+    match property:
+        case "Level":
+            # get first <p> in <div> with id page-content
+            div = soup.find("div", id="page-content")
+            p = div.find_all("p")[1]
+            if "cantrip" in p.text:
+                return 0
+            return p.text[0]
+        case "School":
+            div = soup.find("div", id="page-content")
+            p = div.find_all("p")[1]
+            # remove (ritual) from p.text, capitalize first letters of each word
+            p_text = p.text.replace("(ritual)", "").strip()
+            p_text = " ".join([word.capitalize() for word in p_text.split(" ")])
+            if "Cantrip" in p_text:
+                return p_text.strip().split(" ")[1]
+            return p_text.strip().split(" ")[-1]
+        case "Casting Time":
+            div = soup.find("div", id="page-content")
+            p = div.find_all("p")[2]
+            ct =  str(p).split("</strong> ")[1].split("<strong>")[0].replace("</p>", "").replace("<br/>", "").strip()
+            ct = ct.split(",")[0]
+            return ct
+        case "Range":
+            div = soup.find("div", id="page-content")
+            p = div.find_all("p")[2]
+            range = str(p).split("</strong> ")[2].split("<strong>")[0].replace("</p>", "").replace("<br/>", "").strip()
+            range = range.replace("ft", " feet")
+            return range
+        case "Components":
+            div = soup.find("div", id="page-content")
+            p = div.find_all("p")[2]
+            components = str(p).split("</strong> ")[3].split("<strong>")[0].replace("</p>", "").replace("<br/>", "").strip()
+            # remove stuff in parentheses
+            return components.split(" (")[0]
+        case "Duration":
+            div = soup.find("div", id="page-content")
+            p = div.find_all("p")[2]
+            p_text = str(p).replace("(see below)", "")
+            return p_text.split("</strong> ")[4].split("<strong>")[0].replace("</p>", "").replace("<br/>", "").strip()
+        case "Source":
+            source = soup.find("p", text=lambda x: x and "Source:" in x).text.lower()
+            if "player's handbook" in source:
+                return "phb"
+            elif "xanathar's guide to everything" in source:
+                return "xge"
+            elif "tasha's cauldron of everything" in source:
+                return "tce"
+            elif "unearthed arcana" in source:
+                return "ua"
+            else:
+                return "other"

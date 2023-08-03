@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from spell import spellize, spell_to_dict, filter_spells
-from scrape_data import scrape_class
+from spell import spell_to_dict, filter_spells
+from scrape_data import scrape_class, scrape_spell
 import pickle
 
 def scrape_new_data():
@@ -10,8 +10,9 @@ def scrape_new_data():
 		"Bard": {},
 		"Wizard": {}
 	}
+	print("Scraping data...")
 	for class_name in scraped_data:
-		spell_list = spellize(scrape_class(class_name))
+		spell_list = [scrape_spell(spell_url) for spell_url in scrape_class(class_name)]
 		for spell in spell_list:
 			scraped_data[class_name][spell.name] = spell
 	with open('scraped_data.pkl', 'wb') as f:
