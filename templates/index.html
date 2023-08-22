@@ -124,6 +124,10 @@
       input[type="checkbox"] {
         filter: hue-rotate(190deg) brightness(1.5) saturate(1.2) contrast(0.8);
       }
+
+      #popup{
+        background-image: url("{{ url_for('static', filename='parchment-trans.png') }}");
+      }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -141,13 +145,15 @@
         </div>
         <div class="col-md-4">
           <div class="row">
-            <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;"></div>
+            <div class="col-md-4" style="padding-left: 0px; padding-right: 0px;"></div>
             <div class="col-md-5" style="padding-left: 0px; padding-right: 10px;">
               {% block class %}{% endblock %}
             </div>
-            <div class="col-md-5" style="padding-left: 0px; padding-right: 12px;">
-              {% block subclass %}{% endblock %}
+            <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+              <!-- book.png image -->
+              <img id="book" src="{{ url_for('static', filename='book.png') }}" style="display: block; margin: auto; margin-top:2px; width: 35px; height: 32px" onclick="addSpells()">
             </div>
+            <div class="col-md-1"></div>
           </div>
         </div>
         
@@ -289,6 +295,49 @@
 
           });
         </script>
+      </div>
+
+      <!-- popup (starts off hidden) -->
+      <!-- center popup -->
+      <div id="popup" hidden style="width: 400px; height: 150px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, 100%); border: 1.5px solid rgba(0, 0, 0, 0.5); border-radius: 5px; padding: 10px; text-align: center;">
+        <p style="font-size: 1.1em; font-weight: bold; font-family: 'IM Fell DW Pica'; letter-spacing: 1px;">
+          Add Spells
+        </p>
+        <div class="row">
+          <div class="col-md-9">
+            <!-- input box -->
+            <input type="text" id="spell-name" placeholder="Spell Name" style="width: 95%; margin-left: auto; margin-right: auto; margin-top: 5px; margin-bottom: 5px;">
+          </div>
+          <div class="col-md-3">
+            <!-- submit button -->
+            <button type="button" id="submit-add-spell" style="width: 100%; margin-top: 5px; margin-left: auto; margin-right: auto;
+                          margin-bottom: 5px; font-size: 1em; font-family: 'IM Fell DW Pica'; border-radius: 5px;
+                          background-color:#f5dab17b;" onclick="tryAddSpell()">Submit</button>
+          </div>
+        </div>
+          <!-- response -->
+        <p id="response" style="font-size: 0.9em; font-family: 'IM Fell DW Pica';"></p>
+      </div>
+
+      <script>
+        // add spells to spellbook
+        function addSpells() {
+          // show popup
+          $("#popup").removeAttr("hidden");
+          // remove source search filters
+          $("#settings").attr("hidden", true);
+        }
+
+        // when hovering over book, make it bigger
+        $("#book").hover(function() {
+          // make bigger but keep same position
+          $(this).css("transform", "scale(1.05)");
+        }, function() {
+          // make smaller but keep same position
+          $(this).css("transform", "scale(1)");
+        });
+      </script>
+
     </div>
 
     <!-- include classChange.js -->

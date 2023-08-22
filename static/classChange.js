@@ -33,17 +33,6 @@ function classChange(select) {
             $("#default-text").removeAttr("hidden");
             $("#filters").attr("hidden", true);
             $("body").css("background-color", "#f9f7ed");
-            // remove options from #subclass-select select element
-            select = document.getElementById("subclass-select");
-            var length = select.options.length;
-            for (i = length-1; i >= 0; i--) {
-                select.options[i] = null;
-            }
-            // add back "Select Subclass" option
-            var option = document.createElement("option");
-            option.text = "Select Subclass";
-            option.value = "Select Subclass";
-            select.add(option);
         } else {
             $("#sidebar").removeAttr("hidden");
             $("#sidebar-text").attr("hidden", true);
@@ -66,13 +55,6 @@ function classChange(select) {
                 $("#fullCaster").removeAttr("hidden");
                 $("body").css("background-color", wizard_color);
             }
-
-            // add "example" option to #subclass-select select element
-            select = document.getElementById("subclass-select");
-            var option = document.createElement("option");
-            option.text = "Example";
-            option.value = "Example";
-            select.add(option);
         }
     });
 }

@@ -79,7 +79,7 @@ def spell(spell_name):
 	return content
 
 @app.route('/class/<class_name>', methods=['GET'])
-def class_spells(class_name):
+def class_search(class_name):
 	if class_name == "Select Class":
 		config["class"] = None
 		return "", 200
