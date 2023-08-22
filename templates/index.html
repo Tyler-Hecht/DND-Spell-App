@@ -146,13 +146,9 @@
         </div>
         <div class="col-md-3">
           <div class="row">
-            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;"></div>
-            <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;"></div>
+            <div class="col-md-6" style="padding-left: 0px; padding-right: 11px;">
               {% block class %}{% endblock %}
-            </div>
-            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
-              <!-- book.png image -->
-              <img id="book" src="{{ url_for('static', filename='book.png') }}" style="display: block; margin: auto; margin-top:2px; width: 35px; height: 32px" onclick="addSpellsPopup()" title="Add Spells">
             </div>
           </div>
         </div>
@@ -165,64 +161,73 @@
           Select a class to get started!
         </p>
         <img src="{{ url_for('static', filename='homepage.jpg') }}" style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 10px; width: 45%;" onclick="window.open('https://wallpapercave.com/w/wp2770237', '_blank');">
-        <!-- checkbox for UA with label to the right -->
-        <div id="settings">
-          <div style="text-align: center;">
-            <style>
-              /*  select checkboxes with setting class */
-              input[type="checkbox"].setting {
-               vertical-align: middle;
-               margin-bottom: 3px;
-               height: 17.5px;
-               width: 17.5px;
-              }
-              label.setting{
-                font-size: 1em;
-                font-family: 'IM Fell DW Pica';
-                margin-left: 5px;
-              }
-            </style>
-            <!-- Sources -->
-            <input type="checkbox" id="phb" name="phb" class="setting" onclick="sourceSearch()" checked>
-            <label for="phb" class="setting">Include Player's Handbook</label>
-            <br>
-            <input type="checkbox" id="xge" name="xge" class="setting" onclick="sourceSearch()" checked>
-            <label for="xge" class="setting">Include Xanathar's Guide to Everything</label>
-            <br>
-            <input type="checkbox" id="tce" name="tce" class="setting" onclick="sourceSearch()">
-            <label for="tce" class="setting">Include Tasha's Cauldron of Everything</label>
-            <br>
-            <input type="checkbox" id="ua" name="ua" class="setting" onclick="sourceSearch()">
-            <label for="ua" class="setting">Include Unearthed Arcana</label>
-            <br>
-            <input type="checkbox" id="other" name="other" class="setting" onclick="sourceSearch()">
-            <label for="other" class="setting">Include Other Sources</label>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <!-- checkbox for UA with label to the right -->
+            <div id="settings">
+              <div style="text-align: center;">
+                <style>
+                  /*  select checkboxes with setting class */
+                  input[type="checkbox"].setting {
+                  vertical-align: middle;
+                  margin-bottom: 3px;
+                  height: 17.5px;
+                  width: 17.5px;
+                  }
+                  label.setting{
+                    font-size: 1em;
+                    font-family: 'IM Fell DW Pica';
+                    margin-left: 5px;
+                  }
+                </style>
+                <!-- Sources -->
+                <input type="checkbox" id="phb" name="phb" class="setting" onclick="sourceSearch()" checked>
+                <label for="phb" class="setting">Include Player's Handbook</label>
+                <br>
+                <input type="checkbox" id="xge" name="xge" class="setting" onclick="sourceSearch()" checked>
+                <label for="xge" class="setting">Include Xanathar's Guide to Everything</label>
+                <br>
+                <input type="checkbox" id="tce" name="tce" class="setting" onclick="sourceSearch()">
+                <label for="tce" class="setting">Include Tasha's Cauldron of Everything</label>
+                <br>
+                <input type="checkbox" id="ua" name="ua" class="setting" onclick="sourceSearch()">
+                <label for="ua" class="setting">Include Unearthed Arcana</label>
+                <br>
+                <input type="checkbox" id="other" name="other" class="setting" onclick="sourceSearch()">
+                <label for="other" class="setting">Include Other Sources</label>
 
-            <!-- send sourceSearch request to server when checkbox is clicked -->
-            <script>
-              function sourceSearch() {
-                var phb = document.getElementById("phb").checked;
-                var xge = document.getElementById("xge").checked;
-                var tce = document.getElementById("tce").checked;
-                var ua = document.getElementById("ua").checked;
-                var other = document.getElementById("other").checked;
+                <!-- send sourceSearch request to server when checkbox is clicked -->
+                <script>
+                  function sourceSearch() {
+                    var phb = document.getElementById("phb").checked;
+                    var xge = document.getElementById("xge").checked;
+                    var tce = document.getElementById("tce").checked;
+                    var ua = document.getElementById("ua").checked;
+                    var other = document.getElementById("other").checked;
 
-                let formData = {
-                  "phb": phb,
-                  "xge": xge,
-                  "tce": tce,
-                  "ua": ua,
-                  "other": other
-                };
-                $.post("/sourceSearch", formData)
-                  .done(function(data) {
-                  // update table
-                  $("#table-content").html(data);
-                });
-              }
-            </script>
+                    let formData = {
+                      "phb": phb,
+                      "xge": xge,
+                      "tce": tce,
+                      "ua": ua,
+                      "other": other
+                    };
+                    $.post("/sourceSearch", formData)
+                      .done(function(data) {
+                      // update table
+                      $("#table-content").html(data);
+                    });
+                  }
+                </script>
 
 
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" style="padding-left: 5px;">
+            <!-- book.png image -->
+            <img id="book" src="{{ url_for('static', filename='book.png') }}" style="display: block; margin: auto; margin-left: 0px; margin-top:2px; width: 35px; height: 32px" onclick="addSpellsPopup()" title="Add Spells">
           </div>
         </div>
       </div>
@@ -302,9 +307,9 @@
 
       <script>
         // add spells to spellbook
-        function addSpellsPopup() {
+        function addSpellsPopup(force_hide=false) {
           // if popup isn't open, open it
-          if ($("#popup").attr("hidden")) {
+          if ($("#popup").attr("hidden") && !force_hide) {
             // show popup
             $("#popup").removeAttr("hidden");
             // remove source search filters

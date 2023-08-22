@@ -21,6 +21,9 @@ function classChange(select) {
         var bard_color = "#d9b1f5"
         var wizard_color = "#c44f74"
 
+        // hide add spells  popup when class is changed
+        addSpellsPopup(true);
+
         // hide sidebar when class is changed
         $("#close-sidebar").attr("hidden", true);
         $("#sidebar-text").attr("hidden", true);
