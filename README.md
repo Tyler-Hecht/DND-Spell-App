@@ -2,9 +2,10 @@
 
 This is a webapp that displays spells for a given DND class\
 The spells can be searched by name and filtered by level, casting time, etc.\
-Clicking on a spell shows its description
+Clicking on a spell shows its description\
+You can include other spells in your list with the book on the top right
 
-Currently, three classes and no subclasses are supported\
+Currently, four classes are supported\
 More features are being added
 
 ## Running
