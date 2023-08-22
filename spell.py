@@ -128,7 +128,7 @@ def scrape_property(description, property):
             p_text = p.text.replace("(ritual)", "").strip()
             p_text = " ".join([word.capitalize() for word in p_text.split(" ")])
             if "Cantrip" in p_text:
-                return p_text.strip().split(" ")[1]
+                return p_text.strip().split(" ")[0]
             return p_text.strip().split(" ")[-1]
         case "Casting Time":
             div = soup.find("div", id="page-content")

@@ -5,6 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=IM Fell DW Pica' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Special Elite&text=0123456789' rel='stylesheet'>
     <style>
       ::selection {
         background-color: rgba(0, 0, 255, 0.1);
@@ -140,20 +141,19 @@
       <!-- title -->
       <span class="br" style="--h: 0.6em;"></span>
       <div class="row" style="margin-left: -8px; margin-right: -8px;">
-        <div class="col-md-8" style="font-family: 'Cinzel', serif;">
+        <div class="col-md-9" style="font-family: 'Cinzel', serif;">
           <h3 id = "title" style="font-weight: bold;">DND Spells</h3>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="row">
-            <div class="col-md-4" style="padding-left: 0px; padding-right: 0px;"></div>
-            <div class="col-md-5" style="padding-left: 0px; padding-right: 10px;">
+            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;"></div>
+            <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
               {% block class %}{% endblock %}
             </div>
-            <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
               <!-- book.png image -->
-              <img id="book" src="{{ url_for('static', filename='book.png') }}" style="display: block; margin: auto; margin-top:2px; width: 35px; height: 32px" onclick="addSpells()">
+              <img id="book" src="{{ url_for('static', filename='book.png') }}" style="display: block; margin: auto; margin-top:2px; width: 35px; height: 32px" onclick="addSpellsPopup()" title="Add Spells">
             </div>
-            <div class="col-md-1"></div>
           </div>
         </div>
         
@@ -297,35 +297,28 @@
         </script>
       </div>
 
-      <!-- popup (starts off hidden) -->
-      <!-- center popup -->
-      <div id="popup" hidden style="width: 400px; height: 150px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, 100%); border: 1.5px solid rgba(0, 0, 0, 0.5); border-radius: 5px; padding: 10px; text-align: center;">
-        <p style="font-size: 1.1em; font-weight: bold; font-family: 'IM Fell DW Pica'; letter-spacing: 1px;">
-          Add Spells
-        </p>
-        <div class="row">
-          <div class="col-md-9">
-            <!-- input box -->
-            <input type="text" id="spell-name" placeholder="Spell Name" style="width: 95%; margin-left: auto; margin-right: auto; margin-top: 5px; margin-bottom: 5px;">
-          </div>
-          <div class="col-md-3">
-            <!-- submit button -->
-            <button type="button" id="submit-add-spell" style="width: 100%; margin-top: 5px; margin-left: auto; margin-right: auto;
-                          margin-bottom: 5px; font-size: 1em; font-family: 'IM Fell DW Pica'; border-radius: 5px;
-                          background-color:#f5dab17b;" onclick="tryAddSpell()">Submit</button>
-          </div>
-        </div>
-          <!-- response -->
-        <p id="response" style="font-size: 0.9em; font-family: 'IM Fell DW Pica';"></p>
-      </div>
+      <!-- popup -->
+      {% block popup %}{% endblock %}
 
       <script>
         // add spells to spellbook
-        function addSpells() {
-          // show popup
-          $("#popup").removeAttr("hidden");
-          // remove source search filters
-          $("#settings").attr("hidden", true);
+        function addSpellsPopup() {
+          // if popup isn't open, open it
+          if ($("#popup").attr("hidden")) {
+            // show popup
+            $("#popup").removeAttr("hidden");
+            // remove source search filters
+            $("#settings").attr("hidden", true);
+          } else {
+            // hide popup
+            $("#popup").attr("hidden", true);
+            // show source search filters
+            $("#settings").removeAttr("hidden");
+            // clear input box
+            $("#spell-link").val("");
+            // clear response
+            $("#response").html("");
+          }
         }
 
         // when hovering over book, make it bigger

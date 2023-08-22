@@ -369,3 +369,89 @@ function search() {
 </script>
 
 {% endblock %}
+
+{% block popup %}
+
+<!-- popup (starts off hidden) -->
+<!-- center popup -->
+<div id="popup" hidden style="width: 400px; height: 150px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, 100%); border: 1.5px solid rgba(0, 0, 0, 0.5); border-radius: 5px; padding: 10px; text-align: center;">
+  <p style="font-size: 1.1em; font-weight: bold; font-family: 'IM Fell DW Pica'; letter-spacing: 1px; margin-bottom: 5px">
+    Add Spells
+  </p>
+  <!-- close button -->
+  <div class="row">
+    <div class="col-md-9">
+      <!-- input box -->
+      <input type="text" id="spell-link" placeholder="dnd5e.wikidot.com spell url" style="width: 95%; margin-left: auto; margin-right: auto; margin-top: 5px; margin-bottom: 5px; font-family: Special Elite, IM Fell DW Pica;">
+    </div>
+    <div class="col-md-3">
+      <!-- submit button -->
+      <button type="button" id="submit-add-spell" style="width: 100%; margin-top: 5px; margin-left: auto; margin-right: auto;
+                    margin-bottom: 5px; font-size: 1em; font-family: 'IM Fell DW Pica'; border-radius: 5px;
+                    background-color:#f5dab17b;" onclick="tryAddSpell()">Submit</button>
+    </div>
+  </div>
+  <!-- response -->
+  <p id="response" style="font-size: 1em; font-family: 'IM Fell DW Pica'; height: 15px"></p>
+  <!-- reset button -->
+  <button type="button" id="reset-add-spell" style="width: 50%; height: 30px; margin-left: auto; margin-right: auto;
+                    margin-bottom: 5px; font-size: 1em; font-family: 'IM Fell DW Pica'; border-radius: 5px;
+                    background-color:#f5dab17b;" onclick="resetAddedSpells()">Remove All Added Spells</button>
+</div>
+
+<script>
+  function tryAddSpell() {
+    // send tryAddSpell request to server
+    let formData = {
+      "spellLink": $("#spell-link").val()
+    };
+    $.post("/tryAddSpell", formData)
+      .done(function(data) {
+      // update response
+      $("#response").html(data);
+      // if response is "Spell added", make book flash
+      if (data == "Spell added") {
+        $("#book").animate({
+          opacity: 0.25
+        }, 100, function() {
+          $("#book").animate({
+            opacity: 1
+          }, 100);
+        });
+      }
+    });
+    // update table
+    $.post("/updateTable")
+      .done(function(data) {
+      // update table
+      $("#table-content").html(data);
+    });
+  }
+
+  function resetAddedSpells() {
+    // send resetAddSpell request to server
+    $.post("/resetAddedSpells")
+      .done(function(data) {
+      // update response
+      $("#response").html(data);
+
+      // make book flash
+      $("#book").animate({
+        opacity: 0.25
+      }, 100, function() {
+        $("#book").animate({
+          opacity: 1
+        }, 100);
+      });
+    });
+    // update table
+    $.post("/updateTable")
+      .done(function(data) {
+      // update table
+      $("#table-content").html(data);
+    });
+  }
+
+</script>
+
+{% endblock %}

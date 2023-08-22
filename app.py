@@ -23,6 +23,7 @@ def scrape_new_data():
 # load scraped data from file
 with open('scraped_data.pkl', 'rb') as f:
 	scraped_data = pickle.load(f)
+added_spells = {}
 print("Starting app")
 print("Spell data loaded")
 print("Connect to http://localhost:2000 or an address listed below")
@@ -57,11 +58,12 @@ def lighten(hex_color):
 	new_rgb = tuple([int((255 - rgb[i]) / 2 + rgb[i]) for i in range(3)])
 	return '#%02x%02x%02x' % new_rgb
 
-def updateTable(config, scraped_data):
+def updateTable(config, scraped_data, added_spells):
 	if config["class"] is not None:
 		spells = scraped_data[config["class"]]
 		spells = filter_spells(config, spells)
 		spells_data = [spell_to_dict(spell) for spell in spells]
+		spells_data += [spell_to_dict(spell) for spell in added_spells.values() if spell.name.lower() not in [spell["name"].lower() for spell in spells_data]]
 		return render_template('spell_table.html', spells=spells_data, show=config["show"])
 	else:
 		return render_template('spell_table.html', spells=[], show=0, header_color = "#ffffff")
@@ -75,7 +77,10 @@ def index():
 
 @app.route('/spell/<spell_name>', methods=['GET'])
 def spell(spell_name):
-	content = scraped_data[config["class"]][spell_name].description[0]
+	try:
+		content = scraped_data[config["class"]][spell_name].description[0]
+	except:
+		content = added_spells[spell_name].description[0]
 	return content
 
 @app.route('/class/<class_name>', methods=['GET'])
@@ -88,17 +93,21 @@ def class_search(class_name):
 		config["show"] = 1
 	else:
 		config["show"] = 2
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/search', methods=['POST'])
 def search():
 	config["query"] = request.form["query"]
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/nameOnly', methods=['POST'])
 def nameOnly():
 	config["name only"] = request.form["name-only"] == "true"
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
+
+@app.route('/updateTable', methods=['POST'])
+def update():
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/levelSearch', methods=['POST'])
 def levelSearch():
@@ -108,7 +117,7 @@ def levelSearch():
 		if levels[level] == "true":
 			level_num = level[5:]
 			config["levels"].append(int(level_num))
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/schoolSearch', methods=['POST'])
 def schoolSearch():
@@ -116,7 +125,7 @@ def schoolSearch():
 		config["school"] = request.form["school"]
 	else:
 		config["school"] = None
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/castingTimeSearch', methods=['POST'])
 def castingTimeSearch():
@@ -124,7 +133,7 @@ def castingTimeSearch():
 		config["casting_time"] = request.form["castingTime"]
 	else:
 		config["casting_time"] = None
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/rangeSearch', methods=['POST'])
 def rangeSearch():
@@ -132,7 +141,7 @@ def rangeSearch():
 		config["range"] = request.form["range"]
 	else:
 		config["range"] = None
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/durationSearch', methods=['POST'])
 def durationSearch():
@@ -140,7 +149,7 @@ def durationSearch():
 		config["duration"] = request.form["duration"]
 	else:
 		config["duration"] = None
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/componentsSearch', methods=['POST'])
 def componentsSearch():
@@ -148,7 +157,7 @@ def componentsSearch():
 		config["components"] = request.form["components"]
 	else:
 		config["components"] = None
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/concentrationSearch', methods=['POST'])
 def concentrationSearch():
@@ -156,15 +165,30 @@ def concentrationSearch():
 		config["concentration"] = request.form["concentration"]
 	else:
 		config["concentration"] = None
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/sourceSearch', methods=['POST'])
 def sourceSearch():
 	sources = request.form
 	for source in sources:
 		config["source"][source] = sources[source] == "true"
-	print(config["source"])
-	return updateTable(config, scraped_data)
+	return updateTable(config, scraped_data, added_spells)
+
+@app.route('/tryAddSpell', methods=['POST'])
+def tryAddSpell():
+	spell_link = request.form["spellLink"]
+	# see if valid link
+	try:
+		spell = scrape_spell(spell_link)
+		added_spells[spell.name] = spell
+		return "Spell added", 200
+	except:
+		return "Invalid link", 200
+	
+@app.route('/resetAddedSpells', methods=['POST'])
+def resetAllSpells():
+	added_spells.clear()
+	return "All added spells removed", 200
 
 if __name__ == '__main__':
 	app.run(port = 2000)
