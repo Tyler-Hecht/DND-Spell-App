@@ -61,9 +61,8 @@ def lighten(hex_color):
 def updateTable(config, scraped_data, added_spells):
 	if config["class"] is not None:
 		spells = scraped_data[config["class"]]
-		spells = filter_spells(config, spells)
+		spells = filter_spells(config, spells | added_spells)
 		spells_data = [spell_to_dict(spell) for spell in spells]
-		spells_data += [spell_to_dict(spell) for spell in added_spells.values() if spell.name.lower() not in [spell["name"].lower() for spell in spells_data]]
 		return render_template('spell_table.html', spells=spells_data, show=config["show"])
 	else:
 		return render_template('spell_table.html', spells=[], show=0, header_color = "#ffffff")
@@ -74,6 +73,10 @@ app = Flask(__name__)
 def index():
 	reset_config(config)
 	return render_template("blocks.html")
+
+@app.route('/updateTable', methods=['POST'])
+def update():
+	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/spell/<spell_name>', methods=['GET'])
 def spell(spell_name):
@@ -103,10 +106,6 @@ def search():
 @app.route('/nameOnly', methods=['POST'])
 def nameOnly():
 	config["name only"] = request.form["name-only"] == "true"
-	return updateTable(config, scraped_data, added_spells)
-
-@app.route('/updateTable', methods=['POST'])
-def update():
 	return updateTable(config, scraped_data, added_spells)
 
 @app.route('/levelSearch', methods=['POST'])
