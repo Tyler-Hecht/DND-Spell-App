@@ -48,9 +48,18 @@ function classChange(select) {
             if (selected == "Paladin") {
                 $("#fullCaster").attr("hidden", true);
                 $("body").css("background-color", paladin_color);
-            } else {
+            } else if (selected == "Sorcerer") {  
                 $("#fullCaster").removeAttr("hidden");
                 $("body").css("background-color", sorcerer_color);
+            } else if (selected == "Bard") {
+                $("#fullCaster").removeAttr("hidden");
+                $("body").css("background-color", bard_color);
+            } else if (selected == "Wizard") {
+                $("#fullCaster").removeAttr("hidden");
+                $("body").css("background-color", wizard_color);
+            } else {
+                $("#fullCaster").removeAttr("hidden", true);
+                $("body").css("background-color", "#f9f7ed");
             }
         }
     });
