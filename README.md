@@ -3,7 +3,9 @@
 This is a webapp that displays spells for a given DND class\
 The spells can be searched by name and filtered by level, casting time, etc.\
 Clicking on a spell shows its description\
-You can include other spells in your list by clicking on the book on the main page
+You can include other spells in your list by clicking on the book on the main page\
+Add individual spells by link (dnd5e.wikidot.com) or upload a txt file with a list of spells links (one per line)\
+Spell links with # at the beginning are ignored\
 
 Currently, four classes are supported\
 More features are being added

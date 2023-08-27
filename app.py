@@ -200,6 +200,9 @@ def uploadSpells():
 	any_failed = False
 	for line in file:
 		spell_link = line.decode("utf-8")
+		# if line begins with #, skip
+		if spell_link[0] == "#":
+			continue
 		# see if valid link
 		try:
 			spell = scrape_spell(spell_link)
