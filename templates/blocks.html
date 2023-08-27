@@ -471,6 +471,7 @@ function search() {
     var file = document.getElementById("file").files[0];
     var formData = new FormData();
     formData.append("file", file);
+    $("#response").html("Processing...")
     $.ajax({
       url: "/uploadSpells",
       type: "POST",
@@ -491,6 +492,8 @@ function search() {
         }
       }
     });
+    // clear file input
+    $("#file").val("");
   }
 
 </script>
