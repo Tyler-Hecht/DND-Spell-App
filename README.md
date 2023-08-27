@@ -7,7 +7,7 @@ You can include other spells in your list by clicking on the book on the main pa
 Add individual spells by link (dnd5e.wikidot.com) or upload a txt file with a list of spells links (one per line)\
 Spell links with # at the beginning are ignored\
 
-Currently, four classes are supported\
+Currently, four classes are pre-loaded, but any spell on dnd5e.wikidot.com can be added\
 More features are being added
 
 ## Running
