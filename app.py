@@ -23,7 +23,9 @@ def scrape_new_data():
 # load scraped data from file
 with open('scraped_data.pkl', 'rb') as f:
 	scraped_data = pickle.load(f)
+	scraped_data["Custom"] = {}
 added_spells = {}
+
 print("Starting app")
 print("Spell data loaded")
 print("Connect to http://localhost:2000 or an address listed below")
@@ -189,5 +191,30 @@ def resetAllSpells():
 	added_spells.clear()
 	return "All added spells removed", 200
 
+@app.route('/uploadSpells', methods=['POST'])
+def uploadSpells():
+	# read in form data
+	file = request.files['file']
+	# every line is a spell link
+	any_added = False
+	any_failed = False
+	for line in file:
+		spell_link = line.decode("utf-8")
+		# see if valid link
+		try:
+			spell = scrape_spell(spell_link)
+			added_spells[spell.name] = spell
+			any_added = True
+		except:
+			any_failed = True
+			print("Invalid link: " + spell_link)
+	if any_failed and not any_added:
+		return "All spells failed to add", 200
+	elif any_failed:
+		return "Some spells failed to add", 200
+	elif any_added and not any_failed:
+		return "All spells added", 200
+	else:
+		return "No spells in file", 200
 if __name__ == '__main__':
 	app.run(port = 2000)
