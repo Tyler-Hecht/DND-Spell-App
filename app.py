@@ -199,9 +199,12 @@ def uploadSpells():
 	any_added = False
 	any_failed = False
 	for line in file:
-		spell_link = line.decode("utf-8")
-		# if line begins with #, skip
-		if spell_link[0] == "#":
+		spell_link = line.decode("utf-8").strip()
+		# remove everything after #
+		if "#" in spell_link:
+			spell_link = spell_link[:spell_link.index("#")].strip()
+		# or if empty line, skip
+		if spell_link == "":
 			continue
 		# see if valid link
 		try:

@@ -50,7 +50,7 @@ function classChange(select) {
                 $("body").css("background-color", paladin_color);
             } else if (selected == "Sorcerer") {  
                 $("#fullCaster").removeAttr("hidden");
-                $("body").css("background-color", sorcerer_color);
+                $("body").css("background-ceeolor", sorcerer_color);
             } else if (selected == "Bard") {
                 $("#fullCaster").removeAttr("hidden");
                 $("body").css("background-color", bard_color);
