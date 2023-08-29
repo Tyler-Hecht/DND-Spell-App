@@ -85,6 +85,9 @@ def index():
 		resp.set_cookie("user_id", user_id)
 		print("New user: " + user_id)
 		added_spells[user_id] = {}
+	else:
+		if request.cookies["user_id"] not in added_spells:
+			added_spells[request.cookies["user_id"]] = {}
 	return resp
 
 @app.route('/updateTable', methods=['POST'])
