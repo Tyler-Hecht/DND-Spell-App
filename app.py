@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 from spell import spell_to_dict, filter_spells
 from scrape_data import scrape_class, scrape_spell
+import uuid
 import pickle
 
 def scrape_new_data():
@@ -60,10 +61,13 @@ def lighten(hex_color):
 	new_rgb = tuple([int((255 - rgb[i]) / 2 + rgb[i]) for i in range(3)])
 	return '#%02x%02x%02x' % new_rgb
 
-def updateTable(config, scraped_data, added_spells):
+def updateTable(config, scraped_data):
+	# get added spells from cookie
+	user_spells = added_spells[request.cookies["user_id"]]
+
 	if config["class"] is not None:
 		spells = scraped_data[config["class"]]
-		spells = filter_spells(config, spells | added_spells)
+		spells = filter_spells(config, spells | user_spells)
 		spells_data = [spell_to_dict(spell) for spell in spells]
 		return render_template('spell_table.html', spells=spells_data, show=config["show"])
 	else:
@@ -74,11 +78,18 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 	reset_config(config)
-	return render_template("blocks.html")
+	# set cookie to track user
+	resp = make_response(render_template("blocks.html"))
+	if "user_id" not in request.cookies:
+		user_id = str(uuid.uuid1())
+		resp.set_cookie("user_id", user_id)
+		print("New user: " + user_id)
+		added_spells[user_id] = {}
+	return resp
 
 @app.route('/updateTable', methods=['POST'])
 def update():
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/spell/<spell_name>', methods=['GET'])
 def spell(spell_name):
@@ -98,17 +109,17 @@ def class_search(class_name):
 		config["show"] = 1
 	else:
 		config["show"] = 2
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/search', methods=['POST'])
 def search():
 	config["query"] = request.form["query"]
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/nameOnly', methods=['POST'])
 def nameOnly():
 	config["name only"] = request.form["name-only"] == "true"
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/levelSearch', methods=['POST'])
 def levelSearch():
@@ -118,7 +129,7 @@ def levelSearch():
 		if levels[level] == "true":
 			level_num = level[5:]
 			config["levels"].append(int(level_num))
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/schoolSearch', methods=['POST'])
 def schoolSearch():
@@ -126,7 +137,7 @@ def schoolSearch():
 		config["school"] = request.form["school"]
 	else:
 		config["school"] = None
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/castingTimeSearch', methods=['POST'])
 def castingTimeSearch():
@@ -134,7 +145,7 @@ def castingTimeSearch():
 		config["casting_time"] = request.form["castingTime"]
 	else:
 		config["casting_time"] = None
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/rangeSearch', methods=['POST'])
 def rangeSearch():
@@ -142,7 +153,7 @@ def rangeSearch():
 		config["range"] = request.form["range"]
 	else:
 		config["range"] = None
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/durationSearch', methods=['POST'])
 def durationSearch():
@@ -150,7 +161,7 @@ def durationSearch():
 		config["duration"] = request.form["duration"]
 	else:
 		config["duration"] = None
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/componentsSearch', methods=['POST'])
 def componentsSearch():
@@ -158,7 +169,7 @@ def componentsSearch():
 		config["components"] = request.form["components"]
 	else:
 		config["components"] = None
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/concentrationSearch', methods=['POST'])
 def concentrationSearch():
@@ -166,14 +177,14 @@ def concentrationSearch():
 		config["concentration"] = request.form["concentration"]
 	else:
 		config["concentration"] = None
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/sourceSearch', methods=['POST'])
 def sourceSearch():
 	sources = request.form
 	for source in sources:
 		config["source"][source] = sources[source] == "true"
-	return updateTable(config, scraped_data, added_spells)
+	return updateTable(config, scraped_data)
 
 @app.route('/tryAddSpell', methods=['POST'])
 def tryAddSpell():
@@ -181,14 +192,14 @@ def tryAddSpell():
 	# see if valid link
 	try:
 		spell = scrape_spell(spell_link)
-		added_spells[spell.name] = spell
+		added_spells[request.cookies["user_id"]][spell.name] = spell
 		return "Spell added", 200
 	except:
 		return "Invalid link", 200
 	
 @app.route('/resetAddedSpells', methods=['POST'])
 def resetAllSpells():
-	added_spells.clear()
+	added_spells[request.cookies["user_id"]].clear()
 	return "All added spells removed", 200
 
 @app.route('/uploadSpells', methods=['POST'])
@@ -209,7 +220,7 @@ def uploadSpells():
 		# see if valid link
 		try:
 			spell = scrape_spell(spell_link)
-			added_spells[spell.name] = spell
+			added_spells[request.cookies["user_id"]][spell.name] = spell
 			any_added = True
 		except:
 			any_failed = True

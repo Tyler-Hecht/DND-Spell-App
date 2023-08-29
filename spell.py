@@ -109,6 +109,9 @@ def filter_spells(config, spell_dict):
 
         spells.append(spell)
 
+    # sort spells by level
+    spells.sort(key=lambda x: int(x.level))
+
     return spells
 
 def scrape_property(description, property):
