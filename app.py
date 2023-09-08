@@ -99,7 +99,7 @@ def spell(spell_name):
 	try:
 		content = scraped_data[config["class"]][spell_name].description[0]
 	except:
-		content = added_spells[spell_name].description[0]
+		content = added_spells[request.cookies["user_id"]][spell_name].description[0]
 	return content
 
 @app.route('/class/<class_name>', methods=['GET'])
