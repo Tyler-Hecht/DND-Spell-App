@@ -49,7 +49,7 @@ def reset_config(config):
 		"xge": True,
 		"tce": False,
 		"ua": False,
-		"other": False
+		"other": True
 	}
 
 config = {}
