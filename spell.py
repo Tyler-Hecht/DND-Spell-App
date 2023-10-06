@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import re
 
 class Spell:
     def __init__(self, name, description):

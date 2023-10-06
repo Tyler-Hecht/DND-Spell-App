@@ -2,7 +2,6 @@
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-import pandas as pd
 from spell import Spell
 
 def scrape_spell(url):
@@ -27,6 +26,15 @@ def scrape_spell(url):
     # decrease bottom margin of first two <p> tags
     content.find_all("p")[0]["style"] = "margin-bottom: 8px;"
     content.find_all("p")[1]["style"] = "margin-bottom: 8px;"
+
+    # add a line with the url
+    # hyperlink
+    url_line = soup.new_tag("a", href=url)
+    url_line.string = url
+    # make hyperlink less blue
+    url_line["style"] = "color: #555555;"
+    # add to end of content
+    content.append(url_line)
     
     return Spell(name, str(content))
 

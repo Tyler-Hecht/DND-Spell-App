@@ -18,7 +18,7 @@ def scrape_new_data():
 			scraped_data[class_name][spell.name] = spell
 	with open('scraped_data.pkl', 'wb') as f:
 		pickle.dump(scraped_data, f)
-# Uncomment this to scrape new data (bs4, urllib, and pandas required)
+# Uncomment this to scrape new data (bs4 and urllib required)
 # scrape_new_data()
 
 # load scraped data from file
