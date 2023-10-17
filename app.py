@@ -19,7 +19,7 @@ def scrape_new_data():
 # scrape_new_data()
 
 # load scraped data from file
-with open('scraped_data.pkl', 'rb') as f:
+with open('data/scraped_data.pkl', 'rb') as f:
 	scraped_data = pickle.load(f)
 	scraped_data["Custom"] = {}
 added_spells = {}
