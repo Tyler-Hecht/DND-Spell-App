@@ -5,14 +5,11 @@ import uuid
 import pickle
 
 def scrape_new_data():
-	scraped_data = {
-		"Paladin": {},
-		"Sorcerer": {},
-		"Bard": {},
-		"Wizard": {}
-	}
+	classes = ["Paladin", "Sorcerer", "Bard", "Wizard"]
+	scraped_data = {}
 	print("Scraping data...")
-	for class_name in scraped_data:
+	for class_name in classes:
+		scraped_data[class_name] = {}
 		spell_list = [scrape_spell(spell_url) for spell_url in scrape_class(class_name)]
 		for spell in spell_list:
 			scraped_data[class_name][spell.name] = spell
@@ -53,6 +50,7 @@ def reset_config(config, user_id):
 		"ua": False,
 		"other": True
 	}
+	print(3)
 
 config = {}
 
@@ -85,11 +83,14 @@ def index():
 		resp.set_cookie("user_id", user_id)
 		print("New user: " + user_id)
 		added_spells[user_id] = {}
+		reset_config(config, user_id)
+		return resp
 	else:
 		if request.cookies["user_id"] not in added_spells:
 			added_spells[request.cookies["user_id"]] = {}
-	reset_config(config, request.cookies["user_id"])
-	return resp
+		user_id = request.cookies["user_id"]
+		reset_config(config, user_id)
+		return resp
 
 @app.route('/updateTable', methods=['POST'])
 def update():
