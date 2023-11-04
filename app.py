@@ -50,7 +50,6 @@ def reset_config(config, user_id):
 		"ua": False,
 		"other": True
 	}
-	print(3)
 
 config = {}
 
@@ -63,10 +62,14 @@ def lighten(hex_color):
 def updateTable(config, scraped_data):
 	# get added spells from cookie
 	user_spells = added_spells[request.cookies["user_id"]]
+	user_class = config[request.cookies["user_id"]]["class"]
 
-	if config[request.cookies["user_id"]]["class"] is not None:
-		spells = scraped_data[config[request.cookies["user_id"]]["class"]]
-		spells = filter_spells(config[request.cookies["user_id"]], spells | user_spells)
+	if user_class is not None:
+		if user_class == "Custom":
+			spells = user_spells
+		else:
+			spells = scraped_data[config[request.cookies["user_id"]]["class"]]
+		spells = filter_spells(config[request.cookies["user_id"]], spells)
 		spells_data = [spell_to_dict(spell) for spell in spells]
 		return render_template('spell_table.html', spells=spells_data, show=config[request.cookies["user_id"]]["show"])
 	else:
