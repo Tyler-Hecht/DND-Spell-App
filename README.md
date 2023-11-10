@@ -13,7 +13,7 @@ More features are being added
 ## Running
 
 1. Install [Python](https://www.python.org/downloads/) with [pip](https://pip.pypa.io/en/stable/installation/)
-2. Install Flask with `pip install flask`
+2. Install dependencies with `pip install -r requirements.txt`
 3. Start the app by running the .bat file or entering `flask run` in the terminal
 4. In a browser, go to `localhost:2000`
 

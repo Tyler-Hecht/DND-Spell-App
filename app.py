@@ -16,7 +16,7 @@ def scrape_new_data():
 	with open('scraped_data.pkl', 'wb') as f:
 		pickle.dump(scraped_data, f)
 # Uncomment this to scrape new data (bs4 and urllib required)
-# scrape_new_data()
+scrape_new_data()
 
 # load scraped data from file
 with open('data/scraped_data.pkl', 'rb') as f:

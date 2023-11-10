@@ -128,6 +128,8 @@ def scrape_property(description, property):
             p = div.find_all("p")[1]
             # remove (ritual) from p.text, capitalize first letters of each word
             p_text = p.text.replace("(ritual)", "").strip()
+            # remove (dunamancy:graviturgy) from p_text
+            p_text = p_text.replace("(dunamancy:graviturgy)", "").strip()
             p_text = " ".join([word.capitalize() for word in p_text.split(" ")])
             if "Cantrip" in p_text:
                 return p_text.strip().split(" ")[0]
