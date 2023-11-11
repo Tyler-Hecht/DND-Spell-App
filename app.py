@@ -13,7 +13,7 @@ def scrape_new_data():
 		spell_list = [scrape_spell(spell_url) for spell_url in scrape_class(class_name)]
 		for spell in spell_list:
 			scraped_data[class_name][spell.name] = spell
-	with open('scraped_data.pkl', 'wb') as f:
+	with open('data/scraped_data.pkl', 'wb') as f:
 		pickle.dump(scraped_data, f)
 # Uncomment this to scrape new data (bs4 required)
 # scrape_new_data()
@@ -46,7 +46,7 @@ def reset_config(config, user_id):
 	config[user_id]["source"] = {
 		"phb": True,
 		"xge": True,
-		"tce": False,
+		"tce": True,
 		"ua": False,
 		"other": True
 	}
@@ -103,6 +103,7 @@ def update():
 def spell(spell_name):
 	try:
 		content = scraped_data[config[request.cookies["user_id"]]["class"]][spell_name].description[0]
+		print(scraped_data[config[request.cookies["user_id"]]["class"]][spell_name].school)
 	except:
 		content = added_spells[request.cookies["user_id"]][spell_name].description[0]
 	return content

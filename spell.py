@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import re
 
 class Spell:
     def __init__(self, name, description):
@@ -126,10 +127,8 @@ def scrape_property(description, property):
         case "School":
             div = soup.find("div", id="page-content")
             p = div.find_all("p")[1]
-            # remove (ritual) from p.text, capitalize first letters of each word
-            p_text = p.text.replace("(ritual)", "").strip()
-            # remove (dunamancy:graviturgy) from p_text
-            p_text = p_text.replace("(dunamancy:graviturgy)", "").strip()
+            # remove anything in parentheses from p.text
+            p_text = re.sub(r'\([^)]*\)', '', p.text).strip()
             p_text = " ".join([word.capitalize() for word in p_text.split(" ")])
             if "Cantrip" in p_text:
                 return p_text.strip().split(" ")[0]
