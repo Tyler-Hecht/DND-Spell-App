@@ -155,7 +155,12 @@ def scrape_property(description, property):
             div = soup.find("div", id="page-content")
             p = div.find_all("p")[2]
             p_text = str(p).replace("(see below)", "")
-            return p_text.split("</strong> ")[4].split("<strong>")[0].replace("</p>", "").replace("<br/>", "").strip()
+            try:
+                return p_text.split("</strong>")[4].replace(": ","").split("<strong>")[0].replace("</p>", "").replace("<br/>", "").strip()
+            except ExceptionGroup as e:
+                print(p_text)
+                print(e)
+                exit()
         case "Source":
             source = soup.find("p", text=lambda x: x and "Source:" in x).text.lower()
             if "player's handbook" in source:
