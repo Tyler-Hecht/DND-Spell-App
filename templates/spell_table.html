@@ -62,7 +62,7 @@
       // get the spell name
       var name = row.cells[1].innerHTML;
       // replace / with -
-      name = name.replace("/", "-");
+      name = name.replace(" / ", "--slash--");
       // get the spell details
       $.get("/spell/" + name, function(data) {
           $("#spell-title").html(row.cells[1].innerHTML);

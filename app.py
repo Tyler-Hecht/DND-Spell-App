@@ -101,9 +101,9 @@ def update():
 
 @app.route('/spell/<spell_name>', methods=['GET'])
 def spell(spell_name):
+	spell_name = spell_name.replace("--slash--", "/")
 	try:
 		content = scraped_data[config[request.cookies["user_id"]]["class"]][spell_name].description[0]
-		print(scraped_data[config[request.cookies["user_id"]]["class"]][spell_name].school)
 	except:
 		content = added_spells[request.cookies["user_id"]][spell_name].description[0]
 	return content
